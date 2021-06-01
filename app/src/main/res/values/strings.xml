@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Parking</string>
+    <string name="title">Parking App</string>
+    <string name="unlabel">Email</string>
+    <string name="pwdlabel">Password</string>
+    <string name="signInBtn">SIGN IN</string>
+    <string name="createAccBtn">Create Account</string>
+
+    <string name="welcomeTitle">Welcome to Parking App</string>
+    <string name="namelbl">Name</string>
+    <string name="emaillbl">Email</string>
+    <string name="pwdlbl">Password</string>
+    <string name="contactlbl">Contact Number</string>
+    <string name="carlbl">Car Licence Plate Number</string>
+    <string name="createBtn">Create Account</string>
+
+    <string name="addParkingtitle">Add Parking Details</string>
+    <string name="buildingNo">Building No</string>
+    <string name="hours">Hours</string>
+    <string name="suitNo">Suit No</string>
+    <string name="date">Date &amp; Time</string>
+    <string name="location">Enter location Details</string>
 </resources>
