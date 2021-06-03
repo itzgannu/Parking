@@ -41,7 +41,6 @@
         android:layout_marginStart="109dp"
         android:layout_marginTop="144dp"
         android:layout_marginEnd="108dp"
-        android:fontFamily="@font/courgette"
         android:text="@string/title"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"

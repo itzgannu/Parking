@@ -20,4 +20,7 @@
     <string name="suitNo">Suit No</string>
     <string name="date">Date &amp; Time</string>
     <string name="location">Enter location Details</string>
+
+    <string name="parkingListTitle">Parking List</string>
+    <string name="sameText">SAMPLE TEXT</string>
 </resources>
