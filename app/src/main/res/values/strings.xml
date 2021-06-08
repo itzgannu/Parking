@@ -1,25 +1,35 @@
 <resources>
     <string name="app_name">Parking</string>
-    <string name="title">Parking App</string>
-    <string name="unlabel">Email</string>
-    <string name="pwdlabel">Password</string>
+    <string name="signInTitle">Parking App</string>
+    <string name="signInUnLabel">Email</string>
+    <string name="signInPwdLabel">Password</string>
     <string name="signInBtn">SIGN IN</string>
-    <string name="createAccBtn">Create Account</string>
+    <string name="signCreateAcc">Create Account</string>
+
 
     <string name="welcomeTitle">Welcome to Parking App</string>
-    <string name="namelbl">Name</string>
-    <string name="emaillbl">Email</string>
-    <string name="pwdlbl">Password</string>
-    <string name="contactlbl">Contact Number</string>
-    <string name="carlbl">Car Licence Plate Number</string>
-    <string name="createBtn">Create Account</string>
+    <string name="createAccNameLbl">Name</string>
+    <string name="createAccEmailLbl">Email</string>
+    <string name="createAccPwdLbl">Password</string>
+    <string name="createAccContactLbl">Contact Number</string>
+    <string name="createAccCarLbl">Car Licence Plate Number</string>
+    <string name="createAccBtn">Create Account</string>
+    <string name="createAccNameHint">Enter your name</string>
+    <string name="createAccEmailHint">Enter your email</string>
+    <string name="createAccPwdHint">Enter the password</string>
+    <string name="createAccContactHint">Enter contact number</string>
+    <string name="createAccCarHint">Enter car plate number</string>
 
-    <string name="addParkingtitle">Add Parking Details</string>
-    <string name="buildingNo">Building No</string>
-    <string name="hours">Hours</string>
-    <string name="suitNo">Suit No</string>
-    <string name="date">Date &amp; Time</string>
-    <string name="location">Enter location Details</string>
+    <string name="addParkingTitle">Add Parking Details</string>
+    <string name="addParkBuildingNo">Building No</string>
+    <string name="addParkHours">Hours</string>
+    <string name="addParkSuitNo">Suit No</string>
+    <string name="addParkDate">Date &amp; Time</string>
+    <string name="addParkLocationBtn">Enter location Details</string>
+    <string name="addParkBuildingHint">Enter the building no</string>
+    <string name="addParkHoursHint">Enter the no of hours</string>
+    <string name="addParkSuitHint">Enter the host suit no</string>
+    <string name="addParkDateHint">Enter the date</string>
 
     <string name="parkingListTitle">Parking List</string>
     <string name="sameText">SAMPLE TEXT</string>

@@ -9,65 +9,66 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/createAcc"
+        android:id="@+id/signInCreateAccBtn"
         android:layout_width="378dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:text="@string/createAccBtn"
         app:backgroundTint="#676458"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signIn" />
+        app:layout_constraintTop_toBottomOf="@+id/signInBtn" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/signInPwdLbl"
         android:layout_width="96dp"
         android:layout_height="21dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="45dp"
-        android:text="@string/pwdlabel"
+        android:text="@string/signInPwdLabel"
         android:textColor="#181819"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailField" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/signInTitleLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="109dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="108dp"
-        android:text="@string/title"
+        android:text="@string/signInTitle"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#181819"
         android:textSize="36sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/signInEmailLbl"
         android:layout_width="96dp"
         android:layout_height="21dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:background="#F0F0F3"
-        android:text="@string/unlabel"
+        android:text="@string/signInUnLabel"
         android:textColor="#181819"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/signInTitleLbl" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/signInEmailField"
         android:layout_width="313dp"
         android:layout_height="43dp"
         android:layout_marginStart="50dp"
@@ -75,14 +76,14 @@
         android:layout_marginEnd="50dp"
         android:background="#FFFFFF"
         android:ems="10"
-        android:hint="Enter your email"
+        android:hint="@string/createAccEmailHint"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailLbl" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/signInPwdField"
         android:layout_width="313dp"
         android:layout_height="41dp"
         android:layout_marginStart="50dp"
@@ -90,22 +91,22 @@
         android:layout_marginEnd="50dp"
         android:background="#FFFFFF"
         android:ems="10"
-        android:hint="Enter your password"
+        android:hint="@string/createAccPwdHint"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/signInPwdLbl" />
 
     <Button
-        android:id="@+id/signIn"
+        android:id="@+id/signInBtn"
         android:layout_width="95dp"
         android:layout_height="36dp"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="160dp"
         android:text="@string/signInBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/signInPwdField" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
