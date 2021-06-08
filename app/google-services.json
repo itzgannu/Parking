@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "735294878883",
+    "firebase_url": "https://iosparkingapp-19ec5-default-rtdb.firebaseio.com",
+    "project_id": "iosparkingapp-19ec5",
+    "storage_bucket": "iosparkingapp-19ec5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735294878883:android:a0f11142f971b8dd88fb16",
+        "android_client_info": {
+          "package_name": "divyaganesh.parking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735294878883-iql49gb907sppftult7pk9j1qmvf7pot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx1p0onWVGb-66GznRrcZZW1deFFo8cEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735294878883-iql49gb907sppftult7pk9j1qmvf7pot.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735294878883-9s5jsgavilnjgoel1fb2trk6ft3rt1bl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "DivyaGanesh.iOSParkingApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
