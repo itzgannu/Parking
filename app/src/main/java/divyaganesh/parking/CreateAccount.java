@@ -20,14 +20,11 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
     private Account account;
     private UsersViewModel user;
-    private FirestoreDB db;
     private final String TAG = this.getClass().getCanonicalName();
-    int val;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_create_account);
 
         this.binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
         View view = this.binding.getRoot();
@@ -37,64 +34,66 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.binding.createAccBtn.setOnClickListener(this);
 
         this.account = new Account();
-
     }
-
 
     @Override
     public void onClick(View v) {
-        if(v != null){
-            switch (v.getId()){
-                case R.id.createAccBtn:{
-                    if(validateFields()) {
-
+        if (v != null) {
+            switch (v.getId()) {
+                case R.id.createAccBtn: {
+                    /**
+                     * Logic to check if email already exist in firebase
+                     */
+                    String email = this.binding.createAccEmailField.getText().toString();
+                    boolean check = this.user.checkUser(email);
+                    if (check) {
+                        this.binding.createAccEmailField.setError("Email already exists");
+                        break;
+                    }
+                    /**
+                     * Field validations check
+                     */
+                    if (validateFields()) {
                         Log.d(TAG, "onClick: Save button clicked");
-//                        val = ifEmailExists();
-//                        if(val ==1) {
-//                            Toast.makeText(this, "User already exists. Please use another email", Toast.LENGTH_LONG).show();
-//                        }
-//                        else {
-                            this.saveToDB();
-                            this.createLogin();
-                            this.clearTextEntries();
-                            Toast.makeText(this, "User created successfully. Please login", Toast.LENGTH_LONG).show();
-                            Intent insertIntent = new Intent(this, MainActivity.class);
-                            startActivity(insertIntent);
-//                        }
+                        this.saveToDB();
+                        this.createLogin();
+                        this.clearTextEntries();
+                        Toast.makeText(this, "User created successfully. Please login", Toast.LENGTH_LONG).show();
+                        Intent insertIntent = new Intent(this, MainActivity.class);
+                        startActivity(insertIntent);
                     }
                     break;
                 }
             }
         }
-
     }
 
-    private Boolean validateFields(){
+    private Boolean validateFields() {
         Boolean isValid = true;
-        if(this.binding.createAccNameField.getText().toString().isEmpty()){
+        if (this.binding.createAccNameField.getText().toString().isEmpty()) {
             this.binding.createAccNameField.setError("Field empty - Enter name");
             isValid = false;
         }
-        if(this.binding.createAccEmailField.getText().toString().isEmpty()){
+        if (this.binding.createAccEmailField.getText().toString().isEmpty()) {
             this.binding.createAccEmailField.setError("Field empty - Enter email");
             isValid = false;
         }
-        if(this.binding.createAccPasswordField.getText().toString().isEmpty()){
+        if (this.binding.createAccPasswordField.getText().toString().isEmpty()) {
             this.binding.createAccPasswordField.setError("Field empty - Enter password");
             isValid = false;
         }
-        if(this.binding.createAccContactField.getText().toString().isEmpty()){
+        if (this.binding.createAccContactField.getText().toString().isEmpty()) {
             this.binding.createAccContactField.setError("Field empty - Enter contact number");
             isValid = false;
         }
-        if(this.binding.createAccLicenceField.getText().toString().isEmpty()){
+        if (this.binding.createAccLicenceField.getText().toString().isEmpty()) {
             this.binding.createAccLicenceField.setError("Field empty - Enter License Plate number");
             isValid = false;
         }
         return isValid;
     }
 
-    private void saveToDB(){
+    private void saveToDB() {
         this.account.setName(this.binding.createAccNameField.getText().toString());
         this.account.setEmail(this.binding.createAccEmailField.getText().toString());
         this.account.setPassword(this.binding.createAccPasswordField.getText().toString());
@@ -105,35 +104,17 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.user.addUser(this.account);
     }
 
-    private void createLogin(){
+    private void createLogin() {
         this.account.setEmail(this.binding.createAccEmailField.getText().toString());
         this.account.setPassword(this.binding.createAccPasswordField.getText().toString());
-
         this.user.createLogin(this.account);
     }
 
-    private void clearTextEntries(){
+    private void clearTextEntries() {
         this.binding.createAccNameField.getText().clear();
         this.binding.createAccEmailField.getText().clear();
         this.binding.createAccPasswordField.getText().clear();
         this.binding.createAccContactField.getText().clear();
         this.binding.createAccLicenceField.getText().clear();
     }
-
-/******** this function checks if the email/user exists already in the Account Details DB **********/
-
-//    private int ifEmailExists() {
-//        String email = this.binding.createAccEmailField.getText().toString();
-//        int val =0;
-//
-//        String em = this.user.checkEmail(email);
-//        Log.d(TAG, "ifEmailExists: email " +em);
-//        if(em == null){
-//            val = 0;
-//        }
-//        else if(em != null && em.equalsIgnoreCase(email)){
-//            val = 1;
-//        }
-//        return val;
-//    }
 }

@@ -36,6 +36,8 @@ public class FirestoreDB {
     int count;
     String emailDB;
 
+    List<Login> loginArrayList = new ArrayList<>();
+
     /*
     Log Cat
     */
@@ -64,22 +66,20 @@ public class FirestoreDB {
                                 logCatE("Failed with some error");
                                 return;
                             }
-                            List<Login> loginList = new ArrayList<>();
 
                             if (value.isEmpty()) {
                                 logCatE("No documents found in the collection");
                             } else {
                                 for (DocumentChange docChange : value.getDocumentChanges()) {
                                     Login loginDetails = docChange.getDocument().toObject(Login.class);
-                                    loginDetails.setEmail(docChange.getDocument().getString("Email"));
-                                    loginDetails.setPassword(docChange.getDocument().getString("Password"));
-
-                                    Log.d(TAG, "onEvent: Email : " + loginDetails.getEmail().toString());
-                                    Log.d(TAG, "onEvent: Password : " + loginDetails.getPassword().toString());
+                                    loginDetails.setId(docChange.getDocument().getId());
+                                    Log.d(TAG, "onEvent: LoginDetails - "+loginDetails);
+                                    loginArrayList.add(loginDetails);
                                 }
                             }
                         }
                     });
+            login.postValue(loginArrayList);
 
         } catch (Exception e) {
             logCatE("Unable to fetch data");
@@ -138,6 +138,7 @@ public class FirestoreDB {
             logCatE(e.getLocalizedMessage());
         }
     }
+
 
     /********* check if email already exists while creating account *********/
 
