@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/parking"
+    android:visibility="visible"
     tools:context=".ParkingList">
 
     <TextView
@@ -27,11 +28,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="209dp"
+        android:layout_height="205dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="108dp"
+        android:autofillHints="Fetching data"
+        android:clickable="false"
+        android:keepScreenOn="true"
+        android:labelFor="@id/recyclerViews"
+        android:orientation="horizontal"
+        android:pointerIcon="wait"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parkingTitle" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:id="@+id/recyclerView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parkingTitle" />
 
 

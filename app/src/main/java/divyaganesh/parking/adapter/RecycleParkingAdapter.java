@@ -1,15 +1,20 @@
 package divyaganesh.parking.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import divyaganesh.parking.ParkingDetails;
 import divyaganesh.parking.R;
 import divyaganesh.parking.model.Parking;
 
@@ -28,13 +33,12 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
     /*
     Creating list of Parking class variables
      */
-    List<Parking> recycleParkingList;
+    List<Parking> recycleParkingList = new ArrayList<>();
+    Context context;
 
-    public RecycleParkingAdapter(List<Parking> recycleParkingList) {
-        /*
-        Setting the instance of all the data we from dataBase into local List
-         */
-        this.recycleParkingList = recycleParkingList;
+    public RecycleParkingAdapter(Context context, List<Parking> parkingList) {
+        this.context = context;
+        this.recycleParkingList = parkingList;
     }
 
     @NonNull
@@ -58,6 +62,14 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
         String parkedCarNo = recycleParkingList.get(position).getCarNo();
         String parkedDate = recycleParkingList.get(position).getDate();
         holder.assignValues(parkedCarNo,parkedDate);
+        holder.detailsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToDetailScreen = new Intent(context, ParkingDetails.class);
+                goToDetailScreen.putExtra("Parking",recycleParkingList.get(position));
+                context.startActivity(goToDetailScreen);
+            }
+        });
     }
 
     @Override
@@ -65,7 +77,7 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
         /*
         This will return number of items or card view we need to display on screen
         */
-        logCat("Size of items - "+recycleParkingList.size());
+        logCat("Size-"+recycleParkingList.size());
         return recycleParkingList.size();
     }
 
@@ -79,6 +91,8 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
          */
         private TextView carNumberTextView, parkedDateTextView;
 
+        ConstraintLayout detailsLayout;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             /*
@@ -86,6 +100,7 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
              */
             carNumberTextView = itemView.findViewById(R.id.listTitle);
             parkedDateTextView = itemView.findViewById(R.id.listDate);
+            detailsLayout = itemView.findViewById(R.id.detailsLayout);
         }
 
         public void assignValues(String parkedCarNo, String parkedDate) {
@@ -94,7 +109,8 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
             parkedCarNo & parkedDate are set of each individual item (or) at item level (or) for each item, we can say
              */
             carNumberTextView.setText(parkedCarNo);
-            parkedDateTextView.setText("Parked on - "+parkedDate);
+            String parkedD = "Parked on -"+parkedDate;
+            parkedDateTextView.setText(parkedD);
             logCat("Set Values");
         }
     }
