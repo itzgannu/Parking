@@ -153,6 +153,9 @@ public class ParkingList extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.addParking: {
                 Log.d(TAG, "onOptionsItemSelected: Add Parking clicked");
+                Intent addParkingIntent = new Intent(this, AddParking.class);
+                addParkingIntent.putExtra("CurrentUser", currentUser);
+                startActivity(addParkingIntent);
                 break;
             }
             case R.id.update_parking: {
