@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parking">
+        <!--parentActivityName provides back button automatically-->
         <activity android:name=".ParkingDetails"
             android:parentActivityName=".ParkingList"
             android:label="Parking Details" />
@@ -18,7 +19,9 @@
             android:label="Add Parking"/>
         <activity android:name=".CreateAccount"
             android:label="Create Account"/>
+        <!---noHistory will allow user not to navigate back to main activity after re-opening / navigating to parking list screen-->
         <activity android:name=".MainActivity"
+            android:noHistory="true"
             android:label="Sign In/Up">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

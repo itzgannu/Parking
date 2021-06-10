@@ -1,5 +1,6 @@
 package divyaganesh.parking;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,9 @@ import divyaganesh.parking.viewmodels.ParkingViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -51,11 +55,11 @@ public class ParkingList extends AppCompatActivity {
         setContentView(this.binding.getRoot());
         this.binding.progressbar.setVisibility(View.VISIBLE);
 
-        if(fun.getCurrentUser(this).contentEquals("")){
-            fun.toastMessageLong(this,"Something went wrong. Kindly login again!");
-            Intent goToLoginScreen = new Intent(this,MainActivity.class);
+        if (fun.getCurrentUser(this).contentEquals("")) {
+            fun.toastMessageLong(this, "Something went wrong. Kindly login again!");
+            Intent goToLoginScreen = new Intent(this, MainActivity.class);
             startActivity(goToLoginScreen);
-        }else{
+        } else {
             currentUser = fun.getCurrentUser(this);
         }
 
@@ -121,8 +125,8 @@ public class ParkingList extends AppCompatActivity {
     }
 
     /*
-        Initialize recycler view
-         */
+    Initialize recycler view
+    */
     private void initializeRecyclerView(List<Parking> park) {
         recyclerView = this.binding.recyclerViews;
         linearLayoutManager = new LinearLayoutManager(this);
@@ -130,5 +134,38 @@ public class ParkingList extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recycleParkingAdapter = new RecycleParkingAdapter(this, park);
         recyclerView.setAdapter(recycleParkingAdapter);
+    }
+
+    /**
+     * This is to add menu items to the activity
+     *
+     * @param menu - this will help to return / fetch menu
+     * @return - will be true if created
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.parking_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addParking: {
+                Log.d(TAG, "onOptionsItemSelected: Add Parking clicked");
+                break;
+            }
+            case R.id.update_parking: {
+                Log.d(TAG, "onOptionsItemSelected: Update Profile clicked");
+                break;
+            }
+            case R.id.signOut_parking: {
+                Log.d(TAG, "onOptionsItemSelected: Sign out clicked");
+                //need to implement sign out Intent
+                fun.setCurrentUser(this,"");
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

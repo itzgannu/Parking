@@ -15,6 +15,7 @@ import divyaganesh.parking.viewmodels.UsersViewModel;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ActivityMainBinding binding;
+
     private UsersViewModel usersViewModel;
     List<Login> loginList;
 
@@ -29,9 +30,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View view = binding.getRoot();
         setContentView(view);
 
+        userLoggedIn();
+
         this.usersViewModel = UsersViewModel.getInstance(this.getApplication());
         this.binding.signInCreateAccBtn.setOnClickListener(this);
         this.binding.signInBtn.setOnClickListener(this);
+    }
+    //to check if user already logged in or not
+    protected void userLoggedIn(){
+        if(fun.getCurrentUser(this).contentEquals("")){
+            //do nothing
+        }else{
+            //go to parking screen
+            Intent parkingIntent = new Intent(getApplicationContext(),ParkingList.class);
+            startActivity(parkingIntent);
+        }
     }
 
     public void onClick(View view){

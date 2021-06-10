@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import divyaganesh.parking.ParkingDetails;
 import divyaganesh.parking.R;
+import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Parking;
 
 /*
@@ -23,13 +24,9 @@ class will extend to RecycleView.Adapter & we pass the ViewHolder in it
  */
 
 public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAdapter.MyViewHolder>{
-    /*
-    Log Cat
-     */
+
+    RecursiveMethods fun = new RecursiveMethods();
     private final String TAG  = this.getClass().getCanonicalName();
-    private void logCat(String message){
-        Log.e(TAG,message);
-    }
     /*
     Creating list of Parking class variables
      */
@@ -65,6 +62,9 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
         holder.detailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
+                Go to detail screen & assign Parking obj to that screen
+                 */
                 Intent goToDetailScreen = new Intent(context, ParkingDetails.class);
                 goToDetailScreen.putExtra("Parking",recycleParkingList.get(position));
                 context.startActivity(goToDetailScreen);
@@ -77,7 +77,7 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
         /*
         This will return number of items or card view we need to display on screen
         */
-        logCat("Size-"+recycleParkingList.size());
+        fun.logCatD(TAG,"Size-"+recycleParkingList.size());
         return recycleParkingList.size();
     }
 
@@ -111,7 +111,7 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
             carNumberTextView.setText(parkedCarNo);
             String parkedD = "Parked on -"+parkedDate;
             parkedDateTextView.setText(parkedD);
-            logCat("Set Values");
+            fun.logCatD(TAG,"Values set for card view items");
         }
     }
 }
