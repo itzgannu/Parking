@@ -7,28 +7,34 @@ package divyaganesh.parking.model;
 * We need to create a mutable class to read data of parking list collection when user logs in
 * */
 
-public class Parking {
+import java.io.Serializable;
+
+public class Parking implements Serializable {
     private String BuildingNo;
     private String CarNo;
     private String Date;
     private String Email;
     private String HostNo;
-    private String Lat;
-    private String Long;
+    private String Hours;
+    private Double Lat;
+    private Double Long;
     private String Address;
+    private String id;
 
-    public Parking(String BuildingNo, String CarNo, String Date, String Email, String HostNo, String Lat, String Long, String Address){
-        this.BuildingNo = BuildingNo;
-        this.CarNo = CarNo;
-        this.Date = Date;
-        this.Email = Email;
-        this.HostNo = HostNo;
-        this.Lat = Lat;
-        this.Long = Long;
-        this.Address = Address;
+    public Parking() {
     }
 
-    public Parking(){}
+    public Parking(String buildingNo, String carNo, String date, String email, String hostNo, String hours, Double lat, Double aLong, String address) {
+        BuildingNo = buildingNo;
+        CarNo = carNo;
+        Date = date;
+        Email = email;
+        HostNo = hostNo;
+        Hours = hours;
+        Lat = lat;
+        Long = aLong;
+        Address = address;
+    }
 
     public String getBuildingNo() {
         return BuildingNo;
@@ -70,19 +76,27 @@ public class Parking {
         HostNo = hostNo;
     }
 
-    public String getLat() {
+    public String getHours() {
+        return Hours;
+    }
+
+    public void setHours(String hours) {
+        Hours = hours;
+    }
+
+    public Double getLat() {
         return Lat;
     }
 
-    public void setLat(String lat) {
+    public void setLat(Double lat) {
         Lat = lat;
     }
 
-    public String getLong() {
+    public Double getLong() {
         return Long;
     }
 
-    public void setLong(String aLong) {
+    public void setLong(Double aLong) {
         Long = aLong;
     }
 
@@ -92,5 +106,29 @@ public class Parking {
 
     public void setAddress(String address) {
         Address = address;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Parking{" +
+                "BuildingNo='" + BuildingNo + '\'' +
+                ", CarNo='" + CarNo + '\'' +
+                ", Date='" + Date + '\'' +
+                ", Email='" + Email + '\'' +
+                ", HostNo='" + HostNo + '\'' +
+                ", Hours='" + Hours + '\'' +
+                ", Lat=" + Lat +
+                ", Long=" + Long +
+                ", Address='" + Address + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

@@ -1,7 +1,6 @@
 package divyaganesh.parking.viewmodels;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
@@ -17,7 +16,7 @@ public class UsersViewModel extends AndroidViewModel {
     private final FirestoreDB dbRepo = new FirestoreDB();
     private static UsersViewModel instance;
     public MutableLiveData<List<Login>> login;
-    public MutableLiveData<Account> account;
+
     /**
      * Store Login MutableLiveData into List of Login model class
      */
@@ -35,14 +34,14 @@ public class UsersViewModel extends AndroidViewModel {
         this.dbRepo.getExistingUsers();
     }
 
+    /**
+     * Get all the existing users from repository
+     * Set the local MutableLiveData with view Model class
+     * Set the local List array by converting MutableLiveData
+     */
     public void getExistingUsers() {
-        /**
-         * Get all the existing users from repository
-         * Set the local MutableLiveData with view Model class
-         * Set the local List array by converting MutableLiveData
-         */
         this.dbRepo.getExistingUsers();
-        this.login = this.dbRepo.login;
+        this.login = this.dbRepo.loginLiveData;
         this.loginArrayList = this.login.getValue();
     }
 
@@ -54,13 +53,13 @@ public class UsersViewModel extends AndroidViewModel {
         this.dbRepo.createLogin(ac);
     }
 
+    /**
+     * Function to check if user already exist in firebase database or not
+     */
     public boolean checkUser(String name) {
-        /**
-         * Function to check if user already exist in firebase database or not
-         */
         boolean check = false;
         this.dbRepo.getExistingUsers();
-        this.login = this.dbRepo.login;
+        this.login = this.dbRepo.loginLiveData;
         this.loginArrayList = this.login.getValue();
         assert this.loginArrayList != null;
         for (Login login : this.loginArrayList) {

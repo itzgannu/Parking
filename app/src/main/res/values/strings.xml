@@ -33,4 +33,9 @@
 
     <string name="parkingListTitle">Parking List</string>
     <string name="sameText">SAMPLE TEXT</string>
+    <string name="add_parking">Add Parking</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="save">SAVE</string>
+    <string name="delete">DELETE</string>
 </resources>
