@@ -37,4 +37,8 @@ public class ParkingViewModel extends AndroidViewModel {
     public List<Parking> getALlParkingDetails(){
         return this.db.getAllParkingDetails();
     }
+
+    public void addParkingDetails(Parking p){
+        this.db.addParkingDetail(p);
+    }
 }
