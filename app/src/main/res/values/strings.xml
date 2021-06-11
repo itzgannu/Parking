@@ -23,13 +23,20 @@
     <string name="addParkingTitle">Add Parking Details</string>
     <string name="addParkBuildingNo">Building No</string>
     <string name="addParkHours">Hours</string>
+    <string name="addParkCarNo">Licence No</string>
     <string name="addParkSuitNo">Suit No</string>
     <string name="addParkDate">Date &amp; Time</string>
-    <string name="addParkLocationBtn">Enter location Details</string>
+    <string name="addParkLocation">Location</string>
+    <string name="addParkCalendarBtn" />
+    <string name="addParkCurrentLocationBtn"/>
+    <string name="addParkAddressLbl">Address</string>
     <string name="addParkBuildingHint">Enter the building no</string>
     <string name="addParkHoursHint">Enter the no of hours</string>
     <string name="addParkSuitHint">Enter the host suit no</string>
-    <string name="addParkDateHint">Enter the date</string>
+    <string name="addParkDateHint">Click to fetch date</string>
+    <string name="addParkLocationHint">Fetch current location</string>
+    <string name="addParkAddressHint">Enter address</string>
+    <string name="addParkOR">OR</string>
 
     <string name="parkingListTitle">Parking List</string>
     <string name="sameText">SAMPLE TEXT</string>
