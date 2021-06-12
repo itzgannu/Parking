@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="divyaganesh.parking">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,29 +9,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parking">
-        <!--parentActivityName provides back button automatically-->
-        <activity android:name=".ParkingDetails"
-            android:parentActivityName=".ParkingList"
-            android:label="Parking Details" />
+        <activity android:name=".UpdateProfileActivity"
+            android:label="@string/update_profile"></activity>
+        <!-- parentActivityName provides back button automatically -->
+        <activity
+            android:name=".ParkingDetails"
+            android:label="Parking Details"
+            android:parentActivityName=".ParkingList" />
         <activity android:name=".ParkingList" />
-        <activity android:name=".AddParking"
-            android:parentActivityName=".ParkingList"
-            android:label="Add Parking"/>
-        <activity android:name=".CreateAccount"
-            android:parentActivityName=".MainActivity"
-            android:label="Create Account"/>
-        <!---(android:noHistory="true")noHistory will allow user not to navigate back to main activity after re-opening /
+        <activity
+            android:name=".AddParking"
+            android:label="Add Parking"
+            android:parentActivityName=".ParkingList" />
+        <activity
+            android:name=".CreateAccount"
+            android:label="Create Account"
+            android:parentActivityName=".MainActivity" />
+        <!--
+-(android:noHistory="true")noHistory will allow user not to navigate back to main activity after re-opening /
         navigating to parking list screen, as of 12thJune removing as user can't go back to sign page from create account
-        if back button clicked-->
-        <activity android:name=".MainActivity"
+        if back button clicked
+        -->
+        <activity
+            android:name=".MainActivity"
             android:label="Parking">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="${mapsApikey}"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${mapsApikey}" />
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

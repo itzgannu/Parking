@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import divyaganesh.parking.MainActivity;
+import divyaganesh.parking.UpdateProfileActivity;
 
 public class RecursiveMethods {
     //Shared Preferences
@@ -58,5 +59,12 @@ public class RecursiveMethods {
             context.startActivity(goToLoginScreen);
             toastMessageLong(context,"Signed out!");
         }
+    }
+
+    public void goToUpdateProfileScreen(Context context){
+        Intent goToUpdateProfile = new Intent(context, UpdateProfileActivity.class);
+        String currentUser = getCurrentUser(context);
+        goToUpdateProfile.putExtra("currentUser", currentUser);
+        context.startActivity(goToUpdateProfile);
     }
 }
