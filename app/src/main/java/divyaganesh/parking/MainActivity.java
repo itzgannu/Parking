@@ -48,6 +48,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        fun.checkIfSignUserAvailable(this);
+//    }
+
     public void onClick(View view){
         if(view != null){
             /*

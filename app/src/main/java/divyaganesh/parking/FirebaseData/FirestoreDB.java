@@ -1,5 +1,7 @@
 package divyaganesh.parking.FirebaseData;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
@@ -42,13 +44,17 @@ public class FirestoreDB {
     List<Login> loginList = new ArrayList<>();
 
     private final String COLLECTION_ACCOUNT = "Account Details";
-    public MutableLiveData<Account> accountLive = new MutableLiveData<>();
+    public MutableLiveData<List<Account>> accountLive = new MutableLiveData<>();
+    List<Account> accountList = new ArrayList<>();
 
     private final String COLLECTION_PARKING = "Parking Details";
     public MutableLiveData<List<Parking>> parkingLiveData = new MutableLiveData<List<Parking>>();
     List<Parking> parkingList = new ArrayList<>();
 
 
+    /*
+    CRUD functions for Login Details Database
+     */
     public void getExistingUsers() {
         try {
             db.collection(COLLECTION_LOGIN)
@@ -80,6 +86,67 @@ public class FirestoreDB {
 
     }
 
+    public void createLogin(Account ac) {
+        try {
+            Map<String, Object> data = new HashMap<>();
+            data.put("Email", ac.getEmail());
+            data.put("Password", ac.getPassword());
+
+            db.collection(COLLECTION_LOGIN).add(data)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            fun.logCatD(TAG,"Login Created successfully");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            fun.logCatE(TAG, e.getLocalizedMessage());
+                        }
+                    });
+        } catch (Exception e) {
+            fun.logCatE(TAG, e.getLocalizedMessage());
+        }
+    }
+
+    public void updateLogin(Login login){
+        try{
+            Map<String, Object> data = new HashMap<>();
+            data.put("Password", login.getPassword());
+
+            db.collection(COLLECTION_LOGIN)
+                    .document(login.getId())
+                    .update(data)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            fun.logCatD(TAG, "Updated the record successfully in Firebase");
+                            for(Login log : loginList){
+                                if(log.getEmail().contentEquals(login.getEmail())){
+                                    loginList.remove(log);
+                                    loginList.add(log);
+                                }
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            fun.logCatE(TAG, "Failed to update the record in Firebase");
+                        }
+                    });
+            loginLiveData.postValue(loginList);
+
+        }catch(Exception e){
+            Log.e(TAG, "updateLogin: " +e.getLocalizedMessage() );
+        }
+    }
+
+    /*
+    CRUD functions for Account Details Database
+     */
+
     public void addUser(Account ac) {
         try {
             Map<String, Object> data = new HashMap<>();
@@ -108,27 +175,39 @@ public class FirestoreDB {
         }
     }
 
-    public void createLogin(Account ac) {
-        try {
-            Map<String, Object> data = new HashMap<>();
-            data.put("Email", ac.getEmail());
-            data.put("Password", ac.getPassword());
 
-            db.collection(COLLECTION_LOGIN).add(data)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+    public void updateUser(Account account){
+        try{
+            Map<String, Object> data = new HashMap<>();
+            data.put("Name",account.getName());
+            data.put("Password",account.getPassword());
+            data.put("ContactNo",account.getContactNo());
+
+            db.collection(COLLECTION_PARKING)
+                    .document(account.getId())
+                    .update(data)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            fun.logCatD(TAG,"Login Created successfully");
+                        public void onSuccess(Void unused) {
+                            fun.logCatD(TAG, "Updated the record successfully in Firebase");
+                            for(Account acc : accountList){
+                                if(acc.getCarNo().contentEquals(account.getCarNo())){
+                                    accountList.remove(acc);
+                                    accountList.add(acc);
+                                }
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            fun.logCatE(TAG, e.getLocalizedMessage());
+                            fun.logCatE(TAG, "Failed to update the record in Firebase");
                         }
                     });
-        } catch (Exception e) {
-            fun.logCatE(TAG, e.getLocalizedMessage());
+            accountLive.postValue(accountList);
+        }catch(Exception e){
+            Log.e(TAG, "updateUser: " +e.getLocalizedMessage() );
         }
     }
 
