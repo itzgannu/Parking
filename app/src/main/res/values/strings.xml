@@ -28,7 +28,7 @@
     <string name="addParkDate">Date &amp; Time</string>
     <string name="addParkLocation">Location</string>
     <string name="addParkCalendarBtn" />
-    <string name="addParkCurrentLocationBtn"/>
+    <string name="addParkCurrentLocationBtn" />
     <string name="addParkAddressLbl">Address</string>
     <string name="addParkBuildingHint">Enter the building no</string>
     <string name="addParkHoursHint">Enter the no of hours</string>
