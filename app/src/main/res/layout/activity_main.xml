@@ -5,22 +5,64 @@
     android:id="@+id/SignIn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F3"
+    android:background="@drawable/baymax_3"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/signInCreateAccBtn"
         android:layout_width="378dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
         android:text="@string/createAccBtn"
         app:backgroundTint="#676458"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInBtn" />
+
+    <Button
+        android:id="@+id/signInBtn"
+        android:layout_width="95dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/signInBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInPwdField" />
+
+    <EditText
+        android:id="@+id/signInPwdField"
+        android:layout_width="313dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/createAccPwdHint"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInPwdLbl" />
+
+    <EditText
+        android:id="@+id/signInEmailField"
+        android:layout_width="313dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/createAccEmailHint"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailLbl" />
 
     <TextView
         android:id="@+id/signInPwdLbl"
@@ -37,19 +79,16 @@
 
     <TextView
         android:id="@+id/signInTitleLbl"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="109dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="108dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/courgette"
         android:text="@string/signInTitle"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#181819"
         android:textSize="36sp"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,54 +98,11 @@
         android:layout_height="21dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="50dp"
-        android:background="#F0F0F3"
         android:text="@string/signInUnLabel"
         android:textColor="#181819"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInTitleLbl" />
-
-    <EditText
-        android:id="@+id/signInEmailField"
-        android:layout_width="313dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/createAccEmailHint"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInEmailLbl" />
-
-    <EditText
-        android:id="@+id/signInPwdField"
-        android:layout_width="313dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/createAccPwdHint"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInPwdLbl" />
-
-    <Button
-        android:id="@+id/signInBtn"
-        android:layout_width="95dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="160dp"
-        android:text="@string/signInBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInPwdField" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

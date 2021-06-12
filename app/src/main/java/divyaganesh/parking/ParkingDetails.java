@@ -154,6 +154,13 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
         finish();
     }
 
+    private void goToEditParking(Parking obj){
+        Intent goToEditParkingScreen = new Intent(getApplicationContext(), AddParking.class);
+        goToEditParkingScreen.putExtra("EditParking", obj);
+        goToEditParkingScreen.putExtra("forEdit", true);
+        startActivity(goToEditParkingScreen);
+    }
+
     /**
      * This is to add menu items to the activity
      *
@@ -175,6 +182,11 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
             }
             case R.id.signOut_details: {
                 fun.signOut(this);
+                break;
+            }
+            case R.id.edit_parking:{
+                //call edit parking
+                goToEditParking(detailParkingObj);
                 break;
             }
             case R.id.delete_parking:{

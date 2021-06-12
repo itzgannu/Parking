@@ -5,8 +5,123 @@
     android:id="@+id/AddParking"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F3"
+    android:background="@drawable/android_1"
     tools:context=".AddParking">
+
+    <EditText
+        android:id="@+id/addParkingLicenceField"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/createAccCarHint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addParkingHoursField" />
+
+    <EditText
+        android:id="@+id/addParkingSuitField"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/addParkSuitHint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addParkingLicenceField" />
+
+    <EditText
+        android:id="@+id/addParkingHoursField"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/addParkHoursHint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addParkingBuildingField" />
+
+    <EditText
+        android:id="@+id/addParkingBuildingField"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="80dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/addParkBuildingHint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addParkingDateField"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/addParkDateHint"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addParkingSuitField" />
+
+    <EditText
+        android:id="@+id/addParkingCurrentLocationField"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="35dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/addParkLocationHint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addParkingDateField" />
+
+    <EditText
+        android:id="@+id/addParkingAddressField"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="15dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/addParkAddressHint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addParkingORLbl" />
+
+    <ImageButton
+        android:id="@+id/addParkingFetchAddressBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintEnd_toEndOf="@+id/addParkingAddressField"
+        app:layout_constraintTop_toTopOf="@+id/addParkingAddressField"
+        app:srcCompat="@android:drawable/ic_menu_send" />
+
+    <ImageButton
+        android:id="@+id/addParkingFetchCurrentLocBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintEnd_toEndOf="@+id/addParkingCurrentLocationField"
+        app:layout_constraintTop_toTopOf="@+id/addParkingCurrentLocationField"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+    <ImageButton
+        android:id="@+id/addParkingCalendarBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintEnd_toEndOf="@+id/addParkingDateField"
+        app:layout_constraintTop_toTopOf="@+id/addParkingDateField"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
     <TextView
         android:id="@+id/addParkingAddressLbl"
@@ -21,45 +136,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addParkingORLbl" />
-
-    <EditText
-        android:id="@+id/addParkingLicenceField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/createAccCarHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingHoursField" />
-
-    <EditText
-        android:id="@+id/addParkingSuitField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkSuitHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingLicenceField" />
-
-    <EditText
-        android:id="@+id/addParkingHoursField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkHoursHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingBuildingField" />
 
     <TextView
         android:id="@+id/addParkingSuitLbl"
@@ -131,32 +207,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addParkingHoursLbl" />
 
-    <EditText
-        android:id="@+id/addParkingBuildingField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkBuildingHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/addParkingDateField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkDateHint"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingSuitField" />
-
     <TextView
         android:id="@+id/addParkingCurrentLocationLbl"
         android:layout_width="100dp"
@@ -171,32 +221,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addParkingDateLbl" />
 
-    <EditText
-        android:id="@+id/addParkingCurrentLocationField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkLocationHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingDateField" />
-
-    <EditText
-        android:id="@+id/addParkingAddressField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkAddressHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingORLbl" />
-
     <TextView
         android:id="@+id/addParkingORLbl"
         android:layout_width="wrap_content"
@@ -209,29 +233,5 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addParkingCurrentLocationLbl" />
-
-    <ImageButton
-        android:id="@+id/addParkingFetchAddressBtn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintEnd_toEndOf="@+id/addParkingAddressField"
-        app:layout_constraintTop_toTopOf="@+id/addParkingAddressField"
-        app:srcCompat="@android:drawable/ic_menu_send" />
-
-    <ImageButton
-        android:id="@+id/addParkingFetchCurrentLocBtn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintEnd_toEndOf="@+id/addParkingCurrentLocationField"
-        app:layout_constraintTop_toTopOf="@+id/addParkingCurrentLocationField"
-        app:srcCompat="@android:drawable/ic_menu_mylocation" />
-
-    <ImageButton
-        android:id="@+id/addParkingCalendarBtn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintEnd_toEndOf="@+id/addParkingDateField"
-        app:layout_constraintTop_toTopOf="@+id/addParkingDateField"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

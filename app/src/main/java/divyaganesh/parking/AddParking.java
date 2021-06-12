@@ -1,6 +1,7 @@
 package divyaganesh.parking;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
@@ -13,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -23,7 +27,7 @@ import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Parking;
 import divyaganesh.parking.viewmodels.ParkingViewModel;
 
-public class AddParking extends AppCompatActivity {
+public class AddParking extends AppCompatActivity implements Serializable {
 
     ActivityAddParkingBinding binding;
     private final String TAG = this.getClass().getCanonicalName();
@@ -36,21 +40,42 @@ public class AddParking extends AppCompatActivity {
     private Location currentLocation;
     private String obtainedAddress;
 
+    public boolean forEdit = false;
+    public Parking editParkingObj;
+
+    private boolean clickedLocation = false;
     RecursiveMethods fun = new RecursiveMethods();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_add_parking);
 
         this.binding = ActivityAddParkingBinding.inflate(getLayoutInflater());
         setContentView(this.binding.getRoot());
 
+        Intent i = getIntent();
+        this.forEdit = i.getBooleanExtra("forEdit", false);
+        if(forEdit){
+            editParkingObj = (Parking) getIntent().getSerializableExtra("EditParking");
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+            // calling the action bar
+            ActionBar actionBar = getSupportActionBar();
+
+            // Customize the back button
+            actionBar.setHomeAsUpIndicator(R.drawable.back_icon);
+
+            // showing the back button in action bar
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            setTitle("Update Profile");
+            setValues(editParkingObj);
+        }
+
         this.parking = new Parking();
         this.parkingCallDB = ParkingViewModel.getInstance(this.getApplication());
 
-        Intent i = getIntent();
-        this.email = i.getStringExtra("CurrentUser");
+
+        this.email = fun.getCurrentUser(this);
 
         calendar = Calendar.getInstance();
 
@@ -74,10 +99,28 @@ public class AddParking extends AppCompatActivity {
         this.binding.addParkingFetchCurrentLocBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: Fetch Current Location clicked");
+                fun.logCatD(TAG, "onClick: Fetch Current Location clicked");
                 fetchLocation();
+                clickedLocation = true;
+                binding.addParkingAddressField.setFocusable(false);
+                binding.addParkingFetchAddressBtn.setClickable(false);
+                binding.addParkingAddressField.setText("");
             }
         });
+    }
+
+    private void setValues(Parking parking){
+        this.binding.addParkingBuildingField.setText(parking.getBuildingNo());
+        this.binding.addParkingAddressField.setText(parking.getAddress());
+        this.binding.addParkingDateField.setText(parking.getDate());
+        this.binding.addParkingHoursField.setText(parking.getHours());
+        this.binding.addParkingSuitField.setText(parking.getHostNo());
+        this.binding.addParkingLicenceField.setText(parking.getCarNo());
+        this.binding.addParkingCurrentLocationField.setText(parking.getAddress());
+        //disable
+        this.binding.addParkingLicenceField.setFocusable(false);
+        this.binding.addParkingCalendarBtn.setClickable(false);
+        this.binding.addParkingDateField.setFocusable(false);
     }
 
     @Override
@@ -112,6 +155,9 @@ public class AddParking extends AppCompatActivity {
                 fun.signOut(this);
                 break;
             }
+//            case android.R.id.home:
+//                this.finish();
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -123,7 +169,6 @@ public class AddParking extends AppCompatActivity {
                 public void onChanged(Location location) {
                     if(location != null){
                         currentLocation = location;
-//                        binding.tvLocationInfo.setText(lastLocation.toString());
                         obtainedAddress = locationHelper.getAddress(getApplicationContext(),currentLocation);
                         binding.addParkingCurrentLocationField.setText(obtainedAddress);
                         binding.addParkingCurrentLocationField.setFocusable(false);
@@ -145,7 +190,7 @@ public class AddParking extends AppCompatActivity {
 
             if(this.locationHelper.locationPermissionGranted){
                 //fetch the device location
-                Log.d(TAG, "onCreate: Location Permission Granted" + this.locationHelper.locationPermissionGranted);
+                fun.logCatD(TAG, "onCreate: Location Permission Granted" + this.locationHelper.locationPermissionGranted);
             }
         }
     }
@@ -192,18 +237,38 @@ public class AddParking extends AppCompatActivity {
      */
 
     public void saveToDB(){
-        Log.d(TAG, "saveToDB: Calling Save to DB");
-        this.parking.setBuildingNo(this.binding.addParkingBuildingField.getText().toString());
-        this.parking.setHours(this.binding.addParkingHoursField.getText().toString());
-        this.parking.setCarNo(this.binding.addParkingLicenceField.getText().toString());
-        this.parking.setHostNo(this.binding.addParkingSuitField.getText().toString());
-        this.parking.setDate(this.binding.addParkingDateField.getText().toString());
-        this.parking.setEmail(this.email);
-        this.parking.setAddress(this.obtainedAddress);
-        this.parking.setLat(this.currentLocation.getLatitude());
-        this.parking.setLong(this.currentLocation.getLongitude());
+        fun.logCatD(TAG, "saveToDB: Calling Save to DB");
 
-        this.parkingCallDB.addParkingDetails(this.parking);
+        if(forEdit){
+            Parking toUpdate = editParkingObj;
+            fun.logCatD("Here to", editParkingObj.toString());
+            toUpdate.setBuildingNo(this.binding.addParkingBuildingField.getText().toString());
+            toUpdate.setHours(this.binding.addParkingHoursField.getText().toString());
+            toUpdate.setHostNo(this.binding.addParkingSuitField.getText().toString());
+            //location part is tricky
+            //need to implement address part
+            if(clickedLocation){
+                toUpdate.setAddress(this.obtainedAddress);
+                toUpdate.setLat(this.currentLocation.getLatitude());
+                toUpdate.setLong(this.currentLocation.getLongitude());
+            }
+            fun.logCatD("Here to", toUpdate.toString());
+            //db call
+            this.parkingCallDB.updateParkingDetails(toUpdate);
+        }else{
+            this.parking.setBuildingNo(this.binding.addParkingBuildingField.getText().toString());
+            this.parking.setHours(this.binding.addParkingHoursField.getText().toString());
+            this.parking.setCarNo(this.binding.addParkingLicenceField.getText().toString());
+            this.parking.setHostNo(this.binding.addParkingSuitField.getText().toString());
+            this.parking.setDate(this.binding.addParkingDateField.getText().toString());
+            this.parking.setEmail(this.email);
+            this.parking.setAddress(this.obtainedAddress);
+            this.parking.setLat(this.currentLocation.getLatitude());
+            this.parking.setLong(this.currentLocation.getLongitude());
+            this.parkingCallDB.addParkingDetails(this.parking);
+        }
+
+
     }
 
     private void clearFields(){
