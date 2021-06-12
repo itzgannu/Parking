@@ -57,6 +57,9 @@ public class AddParking extends AppCompatActivity {
         this.locationHelper = LocationHelper.getInstance();
         this.locationHelper.checkPermissions(this);
 
+        this.binding.addParkingCurrentLocationField.setFocusable(false);
+        this.binding.addParkingDateField.setFocusable(false);
+
         //fetches the system date & time
         this.binding.addParkingCalendarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +78,12 @@ public class AddParking extends AppCompatActivity {
                 fetchLocation();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fun.checkIfSignUserAvailable(this);
     }
 
     @Override

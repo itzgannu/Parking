@@ -6,6 +6,7 @@ public class Account {
     private String Password;
     private String ContactNo;
     private String CarNo;
+    private String id;
 
     public Account(){
 
@@ -57,5 +58,13 @@ public class Account {
 
     public void setCarNo(String carNo) {
         CarNo = carNo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
