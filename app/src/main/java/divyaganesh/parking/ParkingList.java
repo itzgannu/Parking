@@ -62,28 +62,32 @@ public class ParkingList extends AppCompatActivity {
 
         ifFromDelete();
 
+        currentUser = fun.getCurrentUser(this);
+
         this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
         this.parkingViewModel.viewModelLiveData.observe(this, new Observer<List<Parking>>() {
             @Override
             public void onChanged(List<Parking> parking) {
+                List<Parking> emailParking = parking;
                 if (parking != null) {
                     for (Parking park : parking) {
                         fun.logCatD(TAG, "Parking Details fetched in activity screen - " + park.toString());
                     }
                 }
-                for (int i = 0; i < (parking != null ? parking.size() : 0); i++) {
+                for (int i = 0; i < emailParking.size(); i++) {
                     //filter as per the currentUser
-                    if ( parking.get(i).getEmail().contentEquals(currentUser)) {
-                        //do nothing
+                    if (emailParking.get(i).getEmail().contentEquals(currentUser)) {
+
                     } else {
-                        parking.remove(i);
+                        fun.logCatD(TAG, "Removing from current user - "+currentUser);
+                        emailParking.remove(i);
                         i--;
                     }
                     binding.progressbar.setVisibility(View.GONE);
                 }
-                fun.logCatD(TAG, "Parking Details w.r.t to email are - " + parking.size());
+                fun.logCatD(TAG, "Parking Details w.r.t to email are - " + emailParking.size());
                 //Load data into recycler View
-                initializeRecyclerView(parking);
+                initializeRecyclerView(emailParking);
             }
         });
         //comment below line to check the progress bar visibility (forever)
@@ -97,6 +101,8 @@ public class ParkingList extends AppCompatActivity {
         fun.checkIfSignUserAvailable(this);
 
         ifFromDelete();
+
+        currentUser = fun.getCurrentUser(this);
 
         this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
         this.parkingViewModel.viewModelLiveData.observe(this, new Observer<List<Parking>>() {

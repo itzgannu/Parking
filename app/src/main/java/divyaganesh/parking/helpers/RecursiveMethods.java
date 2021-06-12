@@ -54,7 +54,9 @@ public class RecursiveMethods {
 
     public void checkIfSignUserAvailable(Context context){
         if(getCurrentUser(context).contentEquals("") || getCurrentUser(context).isEmpty()){
-            signOut(context);
+            Intent goToLoginScreen = new Intent(context, MainActivity.class);
+            context.startActivity(goToLoginScreen);
+            toastMessageLong(context,"Signed out!");
         }
     }
 }
