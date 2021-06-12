@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/delete_parking"
+        android:title="@string/delete_record"
+        app:showAsAction="always"/>
     <item android:title="@string/update_profile"
         android:id="@+id/update_details"/>
     <item android:title="@string/sign_out"

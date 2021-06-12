@@ -1,9 +1,12 @@
 package divyaganesh.parking.helpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
+
+import divyaganesh.parking.MainActivity;
 
 public class RecursiveMethods {
     //Shared Preferences
@@ -40,5 +43,20 @@ public class RecursiveMethods {
     public void toastMessageLong(Context context, String message){
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    public void signOut(Context context){
+        Intent goToLoginScreen = new Intent(context, MainActivity.class);
+        setCurrentUser(context,"");
+        context.startActivity(goToLoginScreen);
+        toastMessageLong(context,"Signed out!");
+    }
+
+    public void checkIfSignUserAvailable(Context context){
+        if(getCurrentUser(context).contentEquals("") || getCurrentUser(context).isEmpty()){
+            Intent goToLoginScreen = new Intent(context, MainActivity.class);
+            context.startActivity(goToLoginScreen);
+            toastMessageLong(context,"Signed out!");
+        }
     }
 }

@@ -20,10 +20,12 @@
             android:parentActivityName=".ParkingList"
             android:label="Add Parking"/>
         <activity android:name=".CreateAccount"
+            android:parentActivityName=".MainActivity"
             android:label="Create Account"/>
-        <!---noHistory will allow user not to navigate back to main activity after re-opening / navigating to parking list screen-->
+        <!---(android:noHistory="true")noHistory will allow user not to navigate back to main activity after re-opening /
+        navigating to parking list screen, as of 12thJune removing as user can't go back to sign page from create account
+        if back button clicked-->
         <activity android:name=".MainActivity"
-            android:noHistory="true"
             android:label="Parking">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

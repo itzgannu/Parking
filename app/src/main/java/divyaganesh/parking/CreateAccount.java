@@ -6,12 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import java.util.List;
-
-import divyaganesh.parking.FirebaseData.FirestoreDB;
 import divyaganesh.parking.databinding.ActivityCreateAccountBinding;
+import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Account;
 import divyaganesh.parking.viewmodels.UsersViewModel;
 
@@ -20,6 +17,8 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
     private Account account;
     private UsersViewModel user;
+
+    RecursiveMethods method = new RecursiveMethods();
     private final String TAG = this.getClass().getCanonicalName();
 
     @Override
@@ -41,7 +40,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         if (v != null) {
             switch (v.getId()) {
                 case R.id.createAccBtn: {
-                    /**
+                    /*
                      * Logic to check if email already exist in firebase
                      */
                     String email = this.binding.createAccEmailField.getText().toString();
@@ -50,7 +49,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                         this.binding.createAccEmailField.setError("Email already exists");
                         break;
                     }
-                    /**
+                    /*
                      * Field validations check
                      */
                     if (validateFields()) {
@@ -58,7 +57,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                         this.saveToDB();
                         this.createLogin();
                         this.clearTextEntries();
-                        Toast.makeText(this, "User created successfully. Please login", Toast.LENGTH_LONG).show();
+                        method.toastMessageLong(this,"User created successfully. Please login");
                         Intent insertIntent = new Intent(this, MainActivity.class);
                         startActivity(insertIntent);
                     }
@@ -69,7 +68,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     }
 
     private Boolean validateFields() {
-        Boolean isValid = true;
+        boolean isValid = true;
         if (this.binding.createAccNameField.getText().toString().isEmpty()) {
             this.binding.createAccNameField.setError("Field empty - Enter name");
             isValid = false;
@@ -100,7 +99,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.account.setContactNo(this.binding.createAccContactField.getText().toString());
         this.account.setCarNo(this.binding.createAccLicenceField.getText().toString());
 
-        Log.d(TAG, "saveToDB: " + this.account);
+        method.logCatD(TAG, "saveToDB: " + this.account);
         this.user.addUser(this.account);
     }
 

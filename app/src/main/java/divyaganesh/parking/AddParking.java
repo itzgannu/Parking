@@ -96,15 +96,11 @@ public class AddParking extends AppCompatActivity {
                 break;
             }
             case R.id.update_add: {
-                Log.d(TAG, "onOptionsItemSelected: Update Profile clicked");
+                //update profile
                 break;
             }
             case R.id.signOut_add: {
-                Log.d(TAG, "onOptionsItemSelected: Sign out clicked");
-                //need to implement sign out Intent
-                fun.setCurrentUser(this,"");
-                Intent signOutIntent = new Intent(this, MainActivity.class);
-                startActivity(signOutIntent);
+                fun.signOut(this);
                 break;
             }
         }

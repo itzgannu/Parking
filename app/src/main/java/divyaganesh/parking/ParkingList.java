@@ -40,6 +40,9 @@ public class ParkingList extends AppCompatActivity {
 
     ActivityParkingListBinding binding;
 
+    public Parking toDeleteParking = new Parking();
+    public boolean forDelete = false;
+
     //To show progress bar on start of activity
     @Override
     protected void onStart() {
@@ -55,13 +58,11 @@ public class ParkingList extends AppCompatActivity {
         setContentView(this.binding.getRoot());
         this.binding.progressbar.setVisibility(View.VISIBLE);
 
-        if (fun.getCurrentUser(this).contentEquals("")) {
-            fun.toastMessageLong(this, "Something went wrong. Kindly login again!");
-            Intent goToLoginScreen = new Intent(this, MainActivity.class);
-            startActivity(goToLoginScreen);
-        } else {
-            currentUser = fun.getCurrentUser(this);
-        }
+        fun.checkIfSignUserAvailable(this);
+
+        ifFromDelete();
+
+        currentUser = fun.getCurrentUser(this);
 
         this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
         this.parkingViewModel.viewModelLiveData.observe(this, new Observer<List<Parking>>() {
@@ -78,6 +79,7 @@ public class ParkingList extends AppCompatActivity {
                     if (emailParking.get(i).getEmail().contentEquals(currentUser)) {
 
                     } else {
+                        fun.logCatD(TAG, "Removing from current user - "+currentUser);
                         emailParking.remove(i);
                         i--;
                     }
@@ -95,6 +97,13 @@ public class ParkingList extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        fun.checkIfSignUserAvailable(this);
+
+        ifFromDelete();
+
+        currentUser = fun.getCurrentUser(this);
+
         this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
         this.parkingViewModel.viewModelLiveData.observe(this, new Observer<List<Parking>>() {
             @Override
@@ -113,6 +122,7 @@ public class ParkingList extends AppCompatActivity {
                         emailParking.remove(i);
                         i--;
                     }
+                    parkingList = emailParking;
                     binding.progressbar.setVisibility(View.GONE);
                 }
                 fun.logCatD(TAG, "Parking Details w.r.t to email are - " + emailParking.size());
@@ -136,6 +146,14 @@ public class ParkingList extends AppCompatActivity {
         recyclerView.setAdapter(recycleParkingAdapter);
     }
 
+    private void ifFromDelete(){
+        if(forDelete){
+            if(parkingList.contains(toDeleteParking)){
+                parkingList.remove(toDeleteParking);
+                initializeRecyclerView(parkingList);
+            }
+        }
+    }
     /**
      * This is to add menu items to the activity
      *
@@ -164,8 +182,7 @@ public class ParkingList extends AppCompatActivity {
             }
             case R.id.signOut_parking: {
                 Log.d(TAG, "onOptionsItemSelected: Sign out clicked");
-                //need to implement sign out Intent
-                fun.setCurrentUser(this,"");
+                fun.signOut(this);
                 break;
             }
         }
