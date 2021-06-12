@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import divyaganesh.parking.databinding.ActivityParkingDetailsBinding;
 import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Parking;
+import divyaganesh.parking.viewmodels.ParkingViewModel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,11 +25,15 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
 
     Parking detailParkingObj;
     RecursiveMethods fun = new RecursiveMethods();
+    private final String TAG = this.getClass().getCanonicalName();
 
     String buildingText, addressText, carText, hoursText, dateText, hostText;
 
     //map - MapViewBundleKey
     private MapView mMapView;
+
+    //Importing viewModel class
+    ParkingViewModel parkingViewModel;
 
     ActivityParkingDetailsBinding binding;
 
@@ -42,17 +48,24 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
         this.binding = ActivityParkingDetailsBinding.inflate(getLayoutInflater());
         setContentView(this.binding.getRoot());
 
+        fun.checkIfSignUserAvailable(this);
+
         detailParkingObj = (Parking) getIntent().getSerializableExtra("Parking");
-        fun.logCatD("-------------",detailParkingObj.toString());
+        //added assert as it was showing in suggestion
+        assert detailParkingObj != null;
+        fun.logCatD(TAG,detailParkingObj.toString());
         setDetails();
 
-        mMapView = (MapView) findViewById(R.id.mapView);
+        mMapView = findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
+
+        this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
     }
 
+    //added @NonNull as it was suggest by IDE
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
     }
@@ -125,6 +138,22 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
         this.binding.suit.setText(hostText);
     }
 
+    private void deleteDetails(){
+        this.parkingViewModel.deleteParkingDetails(detailParkingObj);
+        fun.toastMessageLong(this,"Deleted record from Firebase");
+        Intent goToParkingScreen = new Intent(this,ParkingList.class);
+        goToParkingScreen.putExtra("Parking",detailParkingObj);
+        goToParkingScreen.putExtra("forDelete",true);
+        startActivity(goToParkingScreen);
+        /*
+        finish() helps us to make sure when the user click on back button
+        he wont be navigating back to the screen which is in in-active status
+        which will display the detailedParkingObj details of the deleted screen and new obj isn't passed
+        If you want to test, comment the below line & check by going backwards from ParkingList after deleting record
+         */
+        finish();
+    }
+
     /**
      * This is to add menu items to the activity
      *
@@ -145,9 +174,12 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
                 break;
             }
             case R.id.signOut_details: {
-                //need to implement sign out Intent
-                fun.setCurrentUser(this,"");
-                fun.toastMessageLong(this,"Clicked on sign out");
+                fun.signOut(this);
+                break;
+            }
+            case R.id.delete_parking:{
+                fun.toastMessageLong(this,"Clicked on Delete");
+                deleteDetails();
                 break;
             }
         }

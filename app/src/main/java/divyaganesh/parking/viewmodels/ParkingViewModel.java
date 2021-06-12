@@ -41,4 +41,8 @@ public class ParkingViewModel extends AndroidViewModel {
     public void addParkingDetails(Parking p){
         this.db.addParkingDetail(p);
     }
+
+    public void deleteParkingDetails(Parking p){
+        this.db.deleteParkingDetail(p);
+    }
 }

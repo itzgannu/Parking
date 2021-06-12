@@ -40,6 +40,9 @@ public class ParkingList extends AppCompatActivity {
 
     ActivityParkingListBinding binding;
 
+    public Parking toDeleteParking = new Parking();
+    public boolean forDelete = false;
+
     //To show progress bar on start of activity
     @Override
     protected void onStart() {
@@ -55,37 +58,32 @@ public class ParkingList extends AppCompatActivity {
         setContentView(this.binding.getRoot());
         this.binding.progressbar.setVisibility(View.VISIBLE);
 
-        if (fun.getCurrentUser(this).contentEquals("")) {
-            fun.toastMessageLong(this, "Something went wrong. Kindly login again!");
-            Intent goToLoginScreen = new Intent(this, MainActivity.class);
-            startActivity(goToLoginScreen);
-        } else {
-            currentUser = fun.getCurrentUser(this);
-        }
+        fun.checkIfSignUserAvailable(this);
+
+        ifFromDelete();
 
         this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
         this.parkingViewModel.viewModelLiveData.observe(this, new Observer<List<Parking>>() {
             @Override
             public void onChanged(List<Parking> parking) {
-                List<Parking> emailParking = parking;
                 if (parking != null) {
                     for (Parking park : parking) {
                         fun.logCatD(TAG, "Parking Details fetched in activity screen - " + park.toString());
                     }
                 }
-                for (int i = 0; i < emailParking.size(); i++) {
+                for (int i = 0; i < (parking != null ? parking.size() : 0); i++) {
                     //filter as per the currentUser
-                    if (emailParking.get(i).getEmail().contentEquals(currentUser)) {
-
+                    if ( parking.get(i).getEmail().contentEquals(currentUser)) {
+                        //do nothing
                     } else {
-                        emailParking.remove(i);
+                        parking.remove(i);
                         i--;
                     }
                     binding.progressbar.setVisibility(View.GONE);
                 }
-                fun.logCatD(TAG, "Parking Details w.r.t to email are - " + emailParking.size());
+                fun.logCatD(TAG, "Parking Details w.r.t to email are - " + parking.size());
                 //Load data into recycler View
-                initializeRecyclerView(emailParking);
+                initializeRecyclerView(parking);
             }
         });
         //comment below line to check the progress bar visibility (forever)
@@ -95,6 +93,11 @@ public class ParkingList extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        fun.checkIfSignUserAvailable(this);
+
+        ifFromDelete();
+
         this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
         this.parkingViewModel.viewModelLiveData.observe(this, new Observer<List<Parking>>() {
             @Override
@@ -113,6 +116,7 @@ public class ParkingList extends AppCompatActivity {
                         emailParking.remove(i);
                         i--;
                     }
+                    parkingList = emailParking;
                     binding.progressbar.setVisibility(View.GONE);
                 }
                 fun.logCatD(TAG, "Parking Details w.r.t to email are - " + emailParking.size());
@@ -136,6 +140,14 @@ public class ParkingList extends AppCompatActivity {
         recyclerView.setAdapter(recycleParkingAdapter);
     }
 
+    private void ifFromDelete(){
+        if(forDelete){
+            if(parkingList.contains(toDeleteParking)){
+                parkingList.remove(toDeleteParking);
+                initializeRecyclerView(parkingList);
+            }
+        }
+    }
     /**
      * This is to add menu items to the activity
      *
@@ -164,8 +176,7 @@ public class ParkingList extends AppCompatActivity {
             }
             case R.id.signOut_parking: {
                 Log.d(TAG, "onOptionsItemSelected: Sign out clicked");
-                //need to implement sign out Intent
-                fun.setCurrentUser(this,"");
+                fun.signOut(this);
                 break;
             }
         }

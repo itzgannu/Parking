@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //go to parking screen
             Intent parkingIntent = new Intent(getApplicationContext(),ParkingList.class);
             startActivity(parkingIntent);
+            finish();
         }
     }
 
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      * Check if email field is empty
                      */
                     if(this.binding.signInEmailField.getText().toString().isEmpty()){
-                        fun.toastMessageShort(this,"Enter User Name");
+//                        fun.toastMessageShort(this,"Enter User Name");
+                        this.binding.signInEmailField.setError("Enter Username");
                         break;
                     }
                     /*
@@ -83,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                              * Check if password field is empty
                              */
                             if(this.binding.signInPwdField.getText().toString().isEmpty()){
-                                fun.toastMessageShort(this,"Enter Password");
+                                this.binding.signInPwdField.setError("Enter Password");
+//                                fun.toastMessageShort(this,"Enter Password");
                                 break;
                             }
                            /*
@@ -100,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                /*
                                Show toast message to user that they entered wrong password
                                 */
-                                fun.toastMessageShort(this,"Incorrect Password");
+//                                fun.toastMessageShort(this,"Incorrect Password");
+//                                this.binding.signInPwdField.setText("");
+                                this.binding.signInPwdField.setError("Incorrect Password");
                                 return;
                             }
                         } else{
@@ -113,13 +118,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Intent parkingIntent = new Intent(getApplicationContext(),ParkingList.class);
                         fun.setCurrentUser(this,currentUserEmail);
                         startActivity(parkingIntent);
+                         /*
+                        finish() helps us to make sure when the user click on back button
+                        he wont be navigating back to the screen which is in in-active status
+                        If you want to test, comment the below line & check by going backwards from ParkingList after loggin in
+                         */
+                        finish();
                         break;
                     }
                     /*
                      * If username doesn't exist in the firebase, inform user to create an account first
                      */
                     if(userExist == noOfUsers){
-                        fun.toastMessageLong(this,"User doesn't exist, Kindly create account!");
+//                        fun.toastMessageLong(this,"User doesn't exist, Kindly create account!");
+                        this.binding.signInEmailField.setError("User doesn't exist. Kindly create account");
                         break;
                     }
                     break;

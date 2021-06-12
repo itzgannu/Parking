@@ -47,4 +47,5 @@
     <string name="delete">DELETE</string>
     <string name="parked_vehicle_details">Parked Vehicle Details</string>
     <string name="map_redirect">map redirect</string>
+    <string name="delete_record">Delete Record</string>
 </resources>
