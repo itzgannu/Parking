@@ -147,6 +147,7 @@ public class ParkingList extends AppCompatActivity {
     }
 
     private void ifFromDelete(){
+        forDelete = this.getIntent().getBooleanExtra("forDelete",false);
         if(forDelete){
             if(parkingList.contains(toDeleteParking)){
                 parkingList.remove(toDeleteParking);

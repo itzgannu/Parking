@@ -326,10 +326,17 @@ public class FirestoreDB {
                         @Override
                         public void onSuccess(Void unused) {
                             fun.logCatD(TAG, "Updated the record successfully in Firebase");
-                            for(Parking park : parkingList){
-                                if(park.getCarNo().contentEquals(parking.getCarNo())){
-                                    parkingList.remove(park);
-                                    parkingList.add(park);
+//                            for(Parking park : parkingList){
+//                                if(park.getCarNo().contentEquals(parking.getCarNo())){
+//                                    parkingList.remove(park);
+//                                    parkingList.add(park);
+//                                }
+//                            }
+                            for(int i=0; i<parkingList.size(); i++){
+                                if(parkingList.get(i).getCarNo().contentEquals(parking.getCarNo())){
+                                    parkingList.remove(parkingList.get(i));
+                                    parkingList.add(parking);
+                                    break;
                                 }
                             }
                         }
