@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -45,6 +47,7 @@ public class FirestoreDB {
 
     private final String COLLECTION_ACCOUNT = "Account Details";
     public MutableLiveData<List<Account>> accountLive = new MutableLiveData<>();
+    public MutableLiveData<Account> accFromDB = new MutableLiveData<>();
     List<Account> accountList = new ArrayList<>();
 
     private final String COLLECTION_PARKING = "Parking Details";
@@ -110,20 +113,20 @@ public class FirestoreDB {
         }
     }
 
-    public void updateLogin(Login login){
+    public void updateLogin(Account account){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("Password", login.getPassword());
+            data.put("Password", account.getPassword());
 
             db.collection(COLLECTION_LOGIN)
-                    .document(login.getId())
+                    .document(account.getId())
                     .update(data)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             fun.logCatD(TAG, "Updated the record successfully in Firebase");
                             for(Login log : loginList){
-                                if(log.getEmail().contentEquals(login.getEmail())){
+                                if(log.getEmail().contentEquals(account.getEmail())){
                                     loginList.remove(log);
                                     loginList.add(log);
                                 }
@@ -146,6 +149,33 @@ public class FirestoreDB {
     /*
     CRUD functions for Account Details Database
      */
+
+    public void searchUser(String email){
+        try{
+            db.collection(COLLECTION_ACCOUNT).whereEqualTo("Email",email).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                if(task.getResult().getDocuments().size() !=0){
+                                    Account matchedAccount = task.getResult().getDocuments().get(0).toObject(Account.class);
+                                    matchedAccount.setId(task.getResult().getDocuments().get(0).getId());
+                                    accFromDB.postValue(matchedAccount);
+
+                                    Log.d(TAG, "onComplete: matchedFriend : " + matchedAccount.toString());
+
+                                }else{
+                                    Log.e(TAG, "onComplete: No friend retrieved" );
+                                }
+                            }
+                        }
+                    });
+
+        }catch(Exception e){
+            Log.e(TAG, "searchFriend: " + e.getLocalizedMessage() );
+        }
+
+    }
 
     public void addUser(Account ac) {
         try {

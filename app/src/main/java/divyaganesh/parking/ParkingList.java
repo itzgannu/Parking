@@ -179,6 +179,9 @@ public class ParkingList extends AppCompatActivity {
             }
             case R.id.update_parking: {
                 Log.d(TAG, "onOptionsItemSelected: Update Profile clicked");
+                Intent updateProfileIntent = new Intent(this, UpdateProfileActivity.class);
+                updateProfileIntent.putExtra("CurrentUser", currentUser);
+                startActivity(updateProfileIntent);
                 break;
             }
             case R.id.signOut_parking: {

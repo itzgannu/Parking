@@ -16,6 +16,7 @@ public class UsersViewModel extends AndroidViewModel {
     private final FirestoreDB dbRepo = new FirestoreDB();
     private static UsersViewModel instance;
     public MutableLiveData<List<Login>> login;
+    public MutableLiveData<Account> matchedAccount;
 
     /**
      * Store Login MutableLiveData into List of Login model class
@@ -51,6 +52,19 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void createLogin(Account ac) {
         this.dbRepo.createLogin(ac);
+    }
+
+    public void searchUser(String email){
+        this.dbRepo.searchUser(email);
+        this.matchedAccount = this.dbRepo.accFromDB;
+    }
+
+    public void updateUser(Account ac){
+        this.dbRepo.updateUser(ac);
+    }
+
+    public void updateLogin(Account ac){
+        this.dbRepo.updateLogin(ac);
     }
 
     /**
