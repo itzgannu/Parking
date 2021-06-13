@@ -69,6 +69,9 @@ public class AddParking extends AppCompatActivity implements Serializable {
             actionBar.setDisplayHomeAsUpEnabled(true);
             setTitle("Update Profile");
             setValues(editParkingObj);
+
+            //Disabling fetch date button for update/edit parking since date should not be allowed to change
+            this.binding.addParkingCalendarBtn.setVisibility(View.GONE);
         }
 
         this.parking = new Parking();
