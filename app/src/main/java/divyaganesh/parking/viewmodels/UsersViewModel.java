@@ -1,6 +1,7 @@
 package divyaganesh.parking.viewmodels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
@@ -63,8 +64,8 @@ public class UsersViewModel extends AndroidViewModel {
         this.dbRepo.updateUser(ac);
     }
 
-    public void updateLogin(Account ac){
-        this.dbRepo.updateLogin(ac);
+    public void updateLogin(Login login){
+        this.dbRepo.updateLogin(login);
     }
 
     /**

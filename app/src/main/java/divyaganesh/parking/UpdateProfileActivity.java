@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import divyaganesh.parking.databinding.ActivityUpdateProfileBinding;
 import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Account;
+import divyaganesh.parking.model.Login;
 import divyaganesh.parking.viewmodels.UsersViewModel;
 
 import android.os.Bundle;
@@ -16,6 +17,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     ActivityUpdateProfileBinding binding;
 
     private Account matchedAccount;
+    private Login changeLogin;
     private UsersViewModel usersViewModel;
 
     String currentUser;
@@ -70,9 +72,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
             this.matchedAccount.setName(this.binding.updateNameField.getText().toString());
             this.matchedAccount.setContactNo(this.binding.updateContactField.getText().toString());
             this.matchedAccount.setPassword(this.binding.updatePwdField.getText().toString());
+//            this.changeLogin.setPassword(this.binding.updatePwdField.getText().toString());
 
             this.usersViewModel.updateUser(matchedAccount);
-            this.usersViewModel.updateLogin(matchedAccount);
+//            this.usersViewModel.updateLogin(changeLogin);
         }
         //after saving to db, finish()
     }

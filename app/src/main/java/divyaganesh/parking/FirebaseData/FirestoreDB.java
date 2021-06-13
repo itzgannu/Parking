@@ -113,20 +113,20 @@ public class FirestoreDB {
         }
     }
 
-    public void updateLogin(Account account){
+    public void updateLogin(Login login){
         try{
             Map<String, Object> data = new HashMap<>();
-            data.put("Password", account.getPassword());
+            data.put("Password", login.getPassword());
 
             db.collection(COLLECTION_LOGIN)
-                    .document(account.getId())
+                    .document(login.getId())
                     .update(data)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             fun.logCatD(TAG, "Updated the record successfully in Firebase");
                             for(Login log : loginList){
-                                if(log.getEmail().contentEquals(account.getEmail())){
+                                if(log.getEmail().contentEquals(login.getEmail())){
                                     loginList.remove(log);
                                     loginList.add(log);
                                 }
@@ -214,7 +214,7 @@ public class FirestoreDB {
             data.put("Password",account.getPassword());
             data.put("ContactNo",account.getContactNo());
 
-            db.collection(COLLECTION_PARKING)
+            db.collection(COLLECTION_ACCOUNT)
                     .document(account.getId())
                     .update(data)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
