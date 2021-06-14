@@ -11,8 +11,8 @@
     <string name="createAccNameLbl">Name</string>
     <string name="createAccEmailLbl">Email</string>
     <string name="createAccPwdLbl">Password</string>
-    <string name="createAccContactLbl">Contact Number</string>
-    <string name="createAccCarLbl">Car Licence Plate Number</string>
+    <string name="createAccContactLbl">Contact No</string>
+    <string name="createAccCarLbl">Licence No</string>
     <string name="createAccBtn">Create Account</string>
     <string name="createAccNameHint">Enter your name</string>
     <string name="createAccEmailHint">Enter your email</string>
