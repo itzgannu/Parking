@@ -293,7 +293,7 @@ public class FirestoreDB {
             newProfile.put("Password", createProfileObj.getPassword());
             newProfile.put("ContactNo", createProfileObj.getContactNo());
             newProfile.put("CarNo", createProfileObj.getCarNo());
-            String name = createProfileObj.getName();
+            String name = createProfileObj.getEmail();
             db.collection(COLLECTION_PROFILE)
                     .document(name)
                     .set(newProfile)

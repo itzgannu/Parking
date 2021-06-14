@@ -26,6 +26,7 @@ public class UsersViewModel extends AndroidViewModel {
     public UsersViewModel(Application application) {
         super(application);
         this.dbRepo.getAllProfiles();
+        this.dbRepo.getAllParkingDetails();
     }
 
     /**

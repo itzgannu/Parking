@@ -55,25 +55,26 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                             this.binding.createAccEmailField.setError("Email already exists");
                             break;
                         }
-                        /**
-                         * Logic to check if car no already exist in firebase
-                         */
-                        String carNum = this.binding.createAccLicenceField.getText().toString();
-                        boolean carCheck = this.user.checkIfCarNoAlreadyExistInProfileCollection(carNum);
-                        if(carCheck){
-                            this.binding.createAccLicenceField.setError("Number already exists");
-                            break;
-                        }
+
                         /**
                          * Field validations check
                          */
                         if (validateFields()) {
+                            /**
+                             * Logic to check if car no already exist in firebase
+                             */
+                            String carNum = this.binding.createAccLicenceField.getText().toString();
+                            boolean carCheck = this.user.checkIfCarNoAlreadyExistInProfileCollection(carNum);
+                            if(carCheck){
+                                this.binding.createAccLicenceField.setError("Number already exists");
+                                break;
+                            }
                             method.logCatD(TAG, "onClick: Save button clicked");
                             this.saveProfileToDB();
                             this.clearTextEntries();
                             method.toastMessageLong(getApplicationContext(), "Created profile onClick successfully!");
                             method.goToSignInScreen(getApplicationContext());
-                            this.finish();
+                            finish();
                         }
                     }
                     else {
@@ -127,7 +128,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.account.setId(this.account.getEmail());
         this.user.isProfileAdded(this.account);
     }
-
 
     /**
      * DATABASE Version 1.0 Functions

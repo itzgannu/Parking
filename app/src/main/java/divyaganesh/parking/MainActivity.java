@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.lifecycle.Observer;
 import divyaganesh.parking.databinding.ActivityMainBinding;
 import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Account;
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActivityMainBinding binding;
 
     private UsersViewModel usersViewModel;
-    List<Account> profileList;
+    List<Account> profileList = new ArrayList<>();
 
     RecursiveMethods fun = new RecursiveMethods();
     private final String TAG = this.getClass().getCanonicalName();
@@ -33,6 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         userLoggedIn();
 
         this.usersViewModel = UsersViewModel.getInstance(this.getApplication());
+        profileList.clear();
+        this.usersViewModel.getAllProfiles();
+        this.usersViewModel.viewModelProfileLiveData.observe(this, new Observer<List<Account>>() {
+            @Override
+            public void onChanged(List<Account> accounts) {
+                profileList = accounts;
+            }
+        });
         this.binding.signInCreateAccBtn.setOnClickListener(this);
         this.binding.signInBtn.setOnClickListener(this);
     }
@@ -40,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        profileList.clear();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -47,6 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         userLoggedIn();
 
         this.usersViewModel = UsersViewModel.getInstance(this.getApplication());
+        this.usersViewModel.getAllProfiles();
+        this.usersViewModel.viewModelProfileLiveData.observe(this, new Observer<List<Account>>() {
+            @Override
+            public void onChanged(List<Account> accounts) {
+                        profileList = accounts;
+            }
+        });
+
         this.binding.signInCreateAccBtn.setOnClickListener(this);
         this.binding.signInBtn.setOnClickListener(this);
     }
@@ -55,8 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void userLoggedIn(){
         if(fun.getCurrentUser(this).contentEquals("")){
             //do nothing
+            fun.logCatD(TAG, "No user logged in");
         }else{
             //go to parking screen
+            fun.logCatD(TAG, "User logged in");
             Intent parkingIntent = new Intent(getApplicationContext(),ParkingList.class);
             startActivity(parkingIntent);
             finish();
@@ -79,20 +100,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     this.usersViewModel.getAllProfiles();
                     this.profileList = this.usersViewModel.viewModelProfileList;
                     noOfUsers = this.profileList.size();
-                    for(Account account : this.profileList){
-                        fun.logCatD(TAG,"onClick: Login List populated to check with - "+account.toString());
-                    }
-                    
+
                     for(Account account:this.profileList){
-                        if(account.getEmail().contentEquals(this.binding.signInEmailField.getText().toString())){
-                            if(this.binding.signInPwdField.getText().toString().isEmpty()){
+                        fun.logCatD(TAG,"onClick: Login List populated to check with - "+account.toString());
+                        String email, pass;
+                        email = account.getEmail();
+                        pass = account.getPassword();
+                        String enteredEmail, enteredPass;
+                        enteredEmail = this.binding.signInEmailField.getText().toString();
+                        enteredPass = this.binding.signInPwdField.getText().toString();
+                        fun.logCatD(TAG, "Email is -- "+email);
+                        fun.logCatD(TAG, "Password is -- "+pass);
+                        fun.logCatD(TAG, "Entered Email is -- "+enteredEmail);
+                        fun.logCatD(TAG, "Entered Password is -- "+enteredPass);
+                        if(email.contentEquals(enteredEmail)){
+                            if(enteredPass.isEmpty()){
                                 this.binding.signInPwdField.setError("Enter Password");
                                 break;
                             }
-                            if(account.getPassword().contentEquals(this.binding.signInPwdField.getText().toString())){
+                            if(pass.contentEquals(enteredPass)){
                                 success = true;
                                 currentUserId = account.getId();
                                 fun.logCatD(TAG, "onClick: currentUserId - "+ currentUserId);
+                                break;
                             } else{
                                 this.binding.signInPwdField.setError("Incorrect Password");
                                 return;

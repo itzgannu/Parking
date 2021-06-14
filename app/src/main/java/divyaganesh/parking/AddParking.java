@@ -147,6 +147,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
                     saveToDB();
                     fun.toastMessageLong(this,"Parking Details Saved to DB");
                     clearFields();
+                    finish();
                 }
                 break;
             }
