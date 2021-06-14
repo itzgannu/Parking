@@ -283,7 +283,6 @@ public class FirestoreDB {
     /**
      * CREATE
      * @param createProfileObj - object passed to create the same in firebase
-     * @return if created
      */
     public void createProfile(Account createProfileObj) {
         try {
@@ -377,7 +376,7 @@ public class FirestoreDB {
             updateProfile.put("Password", updateProfileObj.getPassword());
             updateProfile.put("ContactNo", updateProfileObj.getContactNo());
             updateProfile.put("CarNo", updateProfileObj.getCarNo());
-            String documentID = updateProfileObj.getName();
+            String documentID = updateProfileObj.getEmail();
             db.collection(COLLECTION_PROFILE)
                     .document(documentID)
                     .update(updateProfile)

@@ -73,7 +73,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                             this.saveProfileToDB();
                             this.clearTextEntries();
                             method.toastMessageLong(getApplicationContext(), "Created profile onClick successfully!");
-                            method.goToSignInScreen(getApplicationContext());
+                            method.goToSignInScreen(this);
                             finish();
                         }
                     }
