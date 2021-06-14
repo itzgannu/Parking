@@ -10,14 +10,14 @@ import java.util.List;
 
 import divyaganesh.parking.databinding.ActivityMainBinding;
 import divyaganesh.parking.helpers.RecursiveMethods;
-import divyaganesh.parking.model.Login;
+import divyaganesh.parking.model.Account;
 import divyaganesh.parking.viewmodels.UsersViewModel;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ActivityMainBinding binding;
 
     private UsersViewModel usersViewModel;
-    List<Login> loginList;
+    List<Account> profileList;
 
     RecursiveMethods fun = new RecursiveMethods();
     private final String TAG = this.getClass().getCanonicalName();
@@ -36,6 +36,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.binding.signInCreateAccBtn.setOnClickListener(this);
         this.binding.signInBtn.setOnClickListener(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        userLoggedIn();
+
+        this.usersViewModel = UsersViewModel.getInstance(this.getApplication());
+        this.binding.signInCreateAccBtn.setOnClickListener(this);
+        this.binding.signInBtn.setOnClickListener(this);
+    }
+
     //to check if user already logged in or not
     protected void userLoggedIn(){
         if(fun.getCurrentUser(this).contentEquals("")){
@@ -48,17 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        fun.checkIfSignUserAvailable(this);
-//    }
-
     public void onClick(View view){
         if(view != null){
-            /*
-             * Local variable to perform few checks
-             */
             int userExist = 0;
             int noOfUsers = 0;
             boolean success = false;
@@ -66,51 +72,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String currentUserEmail = "";
             switch (view.getId()){
                 case R.id.signInBtn: {
-                    /*
-                     * Check if email field is empty
-                     */
                     if(this.binding.signInEmailField.getText().toString().isEmpty()){
-//                        fun.toastMessageShort(this,"Enter User Name");
                         this.binding.signInEmailField.setError("Enter Username");
                         break;
                     }
-                    /*
-                     * Call view model functions to retrieve all existing users
-                     * Store List of array of view model class into local loginList
-                     */
-                    this.usersViewModel.getExistingUsers();
-                    this.loginList = this.usersViewModel.loginArrayList;
-                    noOfUsers = this.loginList.size();
-                    fun.logCatD(TAG,"onClick: Login List populated to check with - "+this.loginList.toString());
-                    for(Login login:this.loginList){
-                       /*
-                       Check if user exist in the database or not
-                        */
-                        if(login.getEmail().contentEquals(this.binding.signInEmailField.getText().toString())){
-                            /*
-                             * Check if password field is empty
-                             */
+                    this.usersViewModel.getAllProfiles();
+                    this.profileList = this.usersViewModel.viewModelProfileList;
+                    noOfUsers = this.profileList.size();
+                    for(Account account : this.profileList){
+                        fun.logCatD(TAG,"onClick: Login List populated to check with - "+account.toString());
+                    }
+                    
+                    for(Account account:this.profileList){
+                        if(account.getEmail().contentEquals(this.binding.signInEmailField.getText().toString())){
                             if(this.binding.signInPwdField.getText().toString().isEmpty()){
                                 this.binding.signInPwdField.setError("Enter Password");
-//                                fun.toastMessageShort(this,"Enter Password");
                                 break;
                             }
-                           /*
-                           If the user exist, then password matched with the user or not?
-                            */
-                            if(login.getPassword().contentEquals(this.binding.signInPwdField.getText().toString())){
-                               /*
-                               If combination of username & password is correct, navigate to next screen
-                                */
+                            if(account.getPassword().contentEquals(this.binding.signInPwdField.getText().toString())){
                                 success = true;
-                                currentUserId = login.getId();
+                                currentUserId = account.getId();
                                 fun.logCatD(TAG, "onClick: currentUserId - "+ currentUserId);
                             } else{
-                               /*
-                               Show toast message to user that they entered wrong password
-                                */
-//                                fun.toastMessageShort(this,"Incorrect Password");
-//                                this.binding.signInPwdField.setText("");
                                 this.binding.signInPwdField.setError("Incorrect Password");
                                 return;
                             }
@@ -136,14 +119,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      * If username doesn't exist in the firebase, inform user to create an account first
                      */
                     if(userExist == noOfUsers){
-//                        fun.toastMessageLong(this,"User doesn't exist, Kindly create account!");
                         this.binding.signInEmailField.setError("User doesn't exist. Kindly create account");
                         break;
                     }
                     break;
                 }
                 case R.id.signInCreateAccBtn:{
-                    fun.logCatD(TAG, "onClick: create clicked to redirect");
+                    fun.logCatD(TAG, "onClick: Clicked on 'Create Account' & now redirecting");
                     Intent insertIntent = new Intent(this, CreateAccount.class);
                     startActivity(insertIntent);
                     break;

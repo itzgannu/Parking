@@ -2,9 +2,7 @@ package divyaganesh.parking;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import divyaganesh.parking.databinding.ActivityCreateAccountBinding;
@@ -40,31 +38,59 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         if (v != null) {
             switch (v.getId()) {
                 case R.id.createAccBtn: {
-                    /*
-                     * Logic to check if email already exist in firebase
+                    /**
+                     * Check Internet
                      */
-                    String email = this.binding.createAccEmailField.getText().toString();
-                    boolean check = this.user.checkUser(email);
-                    if (check) {
-                        this.binding.createAccEmailField.setError("Email already exists");
-                        break;
+                    if (method.checkInternet(getApplicationContext())) {
+                        /**
+                         * Logic to check if email already exist in firebase
+                         */
+                        String email = this.binding.createAccEmailField.getText().toString();
+                        /**
+                         * If using user & account collections, use the below line of code
+                         * boolean check = this.user.checkUser(email);
+                         */
+                        boolean check = this.user.checkIfEmailAlreadyExistInProfileCollection(email);
+                        if (check) {
+                            this.binding.createAccEmailField.setError("Email already exists");
+                            break;
+                        }
+                        /**
+                         * Logic to check if car no already exist in firebase
+                         */
+                        String carNum = this.binding.createAccLicenceField.getText().toString();
+                        boolean carCheck = this.user.checkIfCarNoAlreadyExistInProfileCollection(carNum);
+                        if(carCheck){
+                            this.binding.createAccLicenceField.setError("Number already exists");
+                            break;
+                        }
+                        /**
+                         * Field validations check
+                         */
+                        if (validateFields()) {
+                            method.logCatD(TAG, "onClick: Save button clicked");
+                            this.saveProfileToDB();
+                            this.clearTextEntries();
+                            method.toastMessageLong(getApplicationContext(), "Created profile onClick successfully!");
+                            method.goToSignInScreen(getApplicationContext());
+                            this.finish();
+                        }
                     }
-                    /*
-                     * Field validations check
-                     */
-                    if (validateFields()) {
-                        Log.d(TAG, "onClick: Save button clicked");
-                        this.saveToDB();
-                        this.createLogin();
-                        this.clearTextEntries();
-                        method.toastMessageLong(this,"User created successfully. Please login");
-                        Intent insertIntent = new Intent(this, MainActivity.class);
-                        startActivity(insertIntent);
+                    else {
+                        method.toastMessageLong(getApplicationContext(), "NO INTERNET CONNECTION");
                     }
                     break;
                 }
             }
         }
+    }
+
+    private void clearTextEntries() {
+        this.binding.createAccNameField.getText().clear();
+        this.binding.createAccEmailField.getText().clear();
+        this.binding.createAccPasswordField.getText().clear();
+        this.binding.createAccContactField.getText().clear();
+        this.binding.createAccLicenceField.getText().clear();
     }
 
     private Boolean validateFields() {
@@ -92,6 +118,21 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         return isValid;
     }
 
+    private void saveProfileToDB() {
+        this.account.setName(this.binding.createAccNameField.getText().toString());
+        this.account.setEmail(this.binding.createAccEmailField.getText().toString());
+        this.account.setPassword(this.binding.createAccPasswordField.getText().toString());
+        this.account.setContactNo(this.binding.createAccContactField.getText().toString());
+        this.account.setCarNo(this.binding.createAccLicenceField.getText().toString());
+        this.account.setId(this.account.getEmail());
+        this.user.isProfileAdded(this.account);
+    }
+
+
+    /**
+     * DATABASE Version 1.0 Functions
+     */
+
     private void saveToDB() {
         this.account.setName(this.binding.createAccNameField.getText().toString());
         this.account.setEmail(this.binding.createAccEmailField.getText().toString());
@@ -109,11 +150,4 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.user.createLogin(this.account);
     }
 
-    private void clearTextEntries() {
-        this.binding.createAccNameField.getText().clear();
-        this.binding.createAccEmailField.getText().clear();
-        this.binding.createAccPasswordField.getText().clear();
-        this.binding.createAccContactField.getText().clear();
-        this.binding.createAccLicenceField.getText().clear();
-    }
 }
