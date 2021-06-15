@@ -167,7 +167,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
         switch (item.getItemId()) {
             case R.id.save_parking: {
                 if(checkFieldValidation()) {
-                    Log.d(TAG, "onOptionsItemSelected: Save clicked");
+                    fun.logCatD("AddParking", "onOptionsItemSelected: Save clicked");
                     saveToDB();
                     fun.toastMessageLong(this,"Parking Details Saved to DB");
                     clearFields();
@@ -213,13 +213,13 @@ Function that fetches the current location
                                     binding.addParkingCurrentLocationField.setText(obtainedAddress);
                                     binding.addParkingCurrentLocationField.setFocusable(false);
 
-                                    Log.d(TAG, "onLocationResult: "+loc.toString());
+                                    fun.logCatD("AddParking","LocationResult: "+loc.toString());
                                 }
                             }
                         };
                         locationHelper.requestLocationUpdates(getApplicationContext(), locationCallback);
                     }else {
-                        Log.d(TAG, "onChanged: Location Not available");
+                        fun.logCatE("AddParking","Location Not available");
                     }
                 }
             });
