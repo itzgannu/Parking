@@ -116,6 +116,10 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             this.binding.createAccLicenceField.setError("Field empty - Enter License Plate number");
             isValid = false;
         }
+        if(!checkLicenceNo(this.binding.createAccLicenceField.getText().toString()) || this.binding.createAccLicenceField.getText().toString().isEmpty()){
+            this.binding.createAccLicenceField.setError("Licence - should be min 2, max 8 alphanum characters");
+            isValid = false;
+        }
         return isValid;
     }
 
@@ -127,6 +131,11 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.account.setCarNo(this.binding.createAccLicenceField.getText().toString());
         this.account.setId(this.account.getEmail());
         this.user.isProfileAdded(this.account);
+    }
+
+    private boolean checkLicenceNo(String licence){
+        String licenceRegex = "^\\w{2,8}$";
+        return licence != null && licence.matches(licenceRegex);
     }
 
     /**
