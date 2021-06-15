@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private LocationHelper locationHelper;
+    private LocationCallback locationCallback;
     private Location currentLocation;
     private String obtainedAddress;
     private double obtainedLat, obtainedLong;
@@ -150,6 +153,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
     protected void onResume() {
         super.onResume();
         fun.checkIfSignUserAvailable(this);
+        this.locationHelper.requestLocationUpdates(this, this.locationCallback);
     }
 
     @Override
@@ -186,19 +190,34 @@ public class AddParking extends AppCompatActivity implements Serializable {
         return super.onOptionsItemSelected(item);
     }
 
+/*
+Function that fetches the current location
+ */
     public void fetchLocation(){
         if(locationHelper.locationPermissionGranted){
             locationHelper.getLastLocation(this).observe(this, new Observer<Location>() {
                 @Override
                 public void onChanged(Location location) {
                     if(location != null){
-                        currentLocation = location;
-                        obtainedLat = currentLocation.getLatitude();
-                        obtainedLong = currentLocation.getLongitude();
-                        obtainedAddress = locationHelper.getAddress(getApplicationContext(),currentLocation);
-                        binding.addParkingCurrentLocationField.setText(obtainedAddress);
-                        binding.addParkingCurrentLocationField.setFocusable(false);
-                        Log.d(TAG, "onCreate: Last Location received" + currentLocation.toString());
+                        locationCallback = new LocationCallback(){
+                            @Override
+                            public void onLocationResult(LocationResult locationResult) {
+                                if(locationResult == null){
+                                    return;
+                                }
+                                for(Location loc : locationResult.getLocations()){
+                                    currentLocation = loc;
+                                    obtainedLat = currentLocation.getLatitude();
+                                    obtainedLong = currentLocation.getLongitude();
+                                    obtainedAddress = locationHelper.getAddress(getApplicationContext(),currentLocation);
+                                    binding.addParkingCurrentLocationField.setText(obtainedAddress);
+                                    binding.addParkingCurrentLocationField.setFocusable(false);
+
+                                    Log.d(TAG, "onLocationResult: "+loc.toString());
+                                }
+                            }
+                        };
+                        locationHelper.requestLocationUpdates(getApplicationContext(), locationCallback);
                     }else {
                         Log.d(TAG, "onChanged: Location Not available");
                     }
@@ -207,6 +226,9 @@ public class AddParking extends AppCompatActivity implements Serializable {
         }
     }
 
+/*
+Function that fetches the lat & long and the address based on the input from user
+ */
     public void fetchLatLong(String address) throws IOException {
         Geocoder geocoder = new Geocoder(getApplicationContext());
         String addressToSearch = address;
@@ -242,6 +264,12 @@ public class AddParking extends AppCompatActivity implements Serializable {
                 fun.logCatD(TAG, "onCreate: Location Permission Granted" + this.locationHelper.locationPermissionGranted);
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.locationHelper.stopLocationUpdates(this,this.locationCallback);
     }
 
     /*

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,7 +32,6 @@ public class LocationHelper {
     private LocationRequest locationRequest;
     public final int request_code_location = 101;
     private FusedLocationProviderClient fusedLocationProviderClient = null;
-    //    Location mLocation;
     MutableLiveData<Location> mLocation = new MutableLiveData<>();
 
     private static final LocationHelper ourInstance = new LocationHelper();
@@ -116,7 +117,6 @@ public class LocationHelper {
             Log.d(TAG, "getAddress: Country Code : " +addressObj.getCountryCode());
             Log.d(TAG, "getAddress: Country Name : " +addressObj.getCountryName());
             Log.d(TAG, "getAddress: City : " +addressObj.getLocality());
-            Log.d(TAG, "getAddress: Postal Code : " +addressObj.getPostalCode());
             Log.d(TAG, "getAddress: Province : " +addressObj.getAdminArea());
 
             return address;
@@ -124,5 +124,24 @@ public class LocationHelper {
             Log.e(TAG, "getAddress: Address not fetched" +e.getLocalizedMessage() );
         }
         return null;
+    }
+
+    @SuppressLint("MissingPermission")
+    public void requestLocationUpdates(Context context, LocationCallback locationCallback){
+        if(this.locationPermissionGranted){
+            try{
+                this.getFusedLocationProviderClient(context).requestLocationUpdates(this.locationRequest, locationCallback, Looper.getMainLooper());
+            }catch(Exception e){
+                Log.e(TAG, "requestLocationUpdates: " +e.getLocalizedMessage() );
+            }
+        }
+    }
+
+    public void stopLocationUpdates(Context context, LocationCallback locationCallback){
+        try{
+            this.getFusedLocationProviderClient(context).removeLocationUpdates(locationCallback);
+        }catch(Exception e){
+            Log.e(TAG, "stopLocationUpdates: " +e.getLocalizedMessage() );
+        }
     }
 }
