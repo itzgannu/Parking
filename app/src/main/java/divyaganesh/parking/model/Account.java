@@ -12,6 +12,17 @@ public class Account {
 
     }
 
+    @Override
+    public String toString() {
+        return "Account{" +
+                "Name='" + Name + '\'' +
+                ", Email='" + Email + '\'' +
+                ", Password='" + Password + '\'' +
+                ", ContactNo='" + ContactNo + '\'' +
+                ", CarNo='" + CarNo + '\'' +
+                '}';
+    }
+
     public Account(String name, String email, String password, String contactNo, String carNo) {
         Name = name;
         Email = email;

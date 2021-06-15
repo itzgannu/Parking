@@ -3,6 +3,8 @@ package divyaganesh.parking.helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,7 +23,6 @@ public class RecursiveMethods {
         editor.putString(currentUser, email);
         editor.commit();
     }
-
     public String getCurrentUser(Context context){
         sharedPreferences = context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
         if(sharedPreferences.contains(currentUser)){
@@ -30,7 +31,6 @@ public class RecursiveMethods {
             return "";
         }
     }
-
     public void logCatD(String className, String message){
         Log.d(className, message);
     }
@@ -45,7 +45,6 @@ public class RecursiveMethods {
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
         toast.show();
     }
-
     public void signOut(Context context){
         Intent goToLoginScreen = new Intent(context, MainActivity.class);
         setCurrentUser(context,"");
@@ -66,5 +65,20 @@ public class RecursiveMethods {
         String currentUser = getCurrentUser(context);
         goToUpdateProfile.putExtra("currentUser", currentUser);
         context.startActivity(goToUpdateProfile);
+    }
+
+    public void goToSignInScreen(Context context){
+        Intent goToSignInScreen = new Intent(context,MainActivity.class);
+        setCurrentUser(context,"");
+        context.startActivity(goToSignInScreen);
+    }
+
+    public boolean checkInternet(Context context){
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 }

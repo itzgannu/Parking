@@ -114,4 +114,17 @@ public class RecycleParkingAdapter extends RecyclerView.Adapter<RecycleParkingAd
             fun.logCatD(TAG,"Values set for card view items");
         }
     }
+
+    public boolean isListEmpty(){
+        if(recycleParkingList != null){
+            if(recycleParkingList.size()==0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
 }

@@ -83,9 +83,9 @@ public class ParkingList extends AppCompatActivity {
                         emailParking.remove(i);
                         i--;
                     }
-                    binding.progressbar.setVisibility(View.GONE);
                 }
                 fun.logCatD(TAG, "Parking Details w.r.t to email are - " + emailParking.size());
+                binding.progressbar.setVisibility(View.GONE);
                 //Load data into recycler View
                 initializeRecyclerView(emailParking);
             }

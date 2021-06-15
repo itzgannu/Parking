@@ -159,6 +159,7 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
         goToEditParkingScreen.putExtra("EditParking", obj);
         goToEditParkingScreen.putExtra("forEdit", true);
         startActivity(goToEditParkingScreen);
+        finish();
     }
 
     /**
