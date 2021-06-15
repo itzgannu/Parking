@@ -46,7 +46,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
     private LocationCallback locationCallback;
     private Location currentLocation;
     private String obtainedAddress;
-    private double obtainedLat, obtainedLong;
+    private Double obtainedLat, obtainedLong;
 
     public boolean forEdit = false;
     public Parking editParkingObj;
@@ -171,28 +171,29 @@ public class AddParking extends AppCompatActivity implements Serializable {
                     saveToDB();
                     fun.toastMessageLong(this,"Parking Details Saved to DB");
                     clearFields();
-                    finish();
+                    //Removed finish() because of bug - after first add parking, two items are displayed in parking list
                 }
                 break;
             }
             case R.id.update_add: {
-                //update profile
+                //update profile - bug fix, added the functionality
+                String currentUser = fun.getCurrentUser(this);
+                Intent updateProfileIntent = new Intent(this, UpdateProfileActivity.class);
+                updateProfileIntent.putExtra("CurrentUser", currentUser);
+                startActivity(updateProfileIntent);
                 break;
             }
             case R.id.signOut_add: {
                 fun.signOut(this);
                 break;
             }
-//            case android.R.id.home:
-//                this.finish();
-//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-/*
-Function that fetches the current location
- */
+    /*
+    Function that fetches the current location
+     */
     public void fetchLocation(){
         if(locationHelper.locationPermissionGranted){
             locationHelper.getLastLocation(this).observe(this, new Observer<Location>() {
@@ -226,9 +227,9 @@ Function that fetches the current location
         }
     }
 
-/*
-Function that fetches the lat & long and the address based on the input from user
- */
+    /*
+    Function that fetches the lat & long and the address based on the input from user
+     */
     public void fetchLatLong(String address) throws IOException {
         Geocoder geocoder = new Geocoder(getApplicationContext());
         String addressToSearch = address;
@@ -304,6 +305,11 @@ Function that fetches the lat & long and the address based on the input from use
         }
         if(this.binding.addParkingCurrentLocationField.getText().toString().isEmpty() && this.binding.addParkingAddressField.getText().toString().isEmpty()){
             fun.toastMessageShort(this, "Click the icon to fetch the address or enter the address");
+            isValid = false;
+        }
+        //bug fix for update Parking
+        if(this.obtainedAddress == null || this.obtainedLong == null || this.obtainedLat == null){
+            fun.toastMessageLong(this, "Click on current location or location by address buttons to proceed");
             isValid = false;
         }
         return isValid;
