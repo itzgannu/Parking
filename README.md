@@ -87,6 +87,10 @@ The below details about the progress in the project are specified in the ReadMe 
 ### Add Parking -
 ![Add Parking](https://user-images.githubusercontent.com/80915452/122119165-7facdd80-ce46-11eb-8a34-85803de2359b.png)
 
+### Update Parking -
+![Update Parking](https://user-images.githubusercontent.com/80915452/122124359-cd2c4900-ce4c-11eb-8686-0c307ed02e16.png)
+
+
 ### Sign Out -
 ![Signed Out](https://user-images.githubusercontent.com/80915452/122118897-38265180-ce46-11eb-94ba-ded8d20a2e57.png)
 
