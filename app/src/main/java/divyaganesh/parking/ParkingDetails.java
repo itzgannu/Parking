@@ -9,6 +9,7 @@ import divyaganesh.parking.viewmodels.ParkingViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -179,6 +180,11 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
         switch (item.getItemId()) {
             case R.id.update_details: {
                 fun.toastMessageLong(this,"Clicked on update profile");
+                //update profile - bug fix, added the functionality
+                String currentUser = fun.getCurrentUser(this);
+                Intent updateProfileIntent = new Intent(this, UpdateProfileActivity.class);
+                updateProfileIntent.putExtra("CurrentUser", currentUser);
+                startActivity(updateProfileIntent);
                 break;
             }
             case R.id.signOut_details: {

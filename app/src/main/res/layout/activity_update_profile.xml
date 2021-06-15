@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/among_us"
+    android:background="@drawable/baymax_3"
     tools:context=".UpdateProfileActivity">
 
     <Button
@@ -28,6 +28,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/sameText"
+        android:background="#FFFFFF"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/update_name_field" />
@@ -40,6 +41,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/sameText"
+        android:background="#FFFFFF"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/update_pwd_field" />
@@ -52,6 +54,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/sameText"
+        android:background="#FFFFFF"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/update_email_carno_label" />
@@ -77,8 +80,8 @@
         android:fontFamily="@font/crushed"
         android:text="@string/sameText"
         android:textAlignment="center"
-        android:textColor="#F44336"
-        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/parkingTitle" />
 

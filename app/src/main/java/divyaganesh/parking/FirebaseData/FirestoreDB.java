@@ -166,7 +166,7 @@ public class FirestoreDB {
     public void updateParkingDetail(Parking parking) {
         try {
             Map<String, Object> data = new HashMap<>();
-            data.put("Email", parking.getEmail());
+            data.put("Email", parking.getEmail().toLowerCase());
             data.put("Address", parking.getAddress());
             data.put("BuildingNo", parking.getBuildingNo());
             data.put("CarNo", parking.getCarNo());
@@ -221,7 +221,7 @@ public class FirestoreDB {
     public void addParkingDetail(Parking parking) {
         try {
             Map<String, Object> data = new HashMap<>();
-            data.put("Email", parking.getEmail());
+            data.put("Email", parking.getEmail().toLowerCase());
             data.put("Address", parking.getAddress());
             data.put("BuildingNo", parking.getBuildingNo());
             data.put("CarNo", parking.getCarNo());
@@ -288,7 +288,7 @@ public class FirestoreDB {
         try {
             Map<String, Object> newProfile = new HashMap<>();
             newProfile.put("Name", createProfileObj.getName());
-            newProfile.put("Email", createProfileObj.getEmail());
+            newProfile.put("Email", createProfileObj.getEmail().toLowerCase());
             newProfile.put("Password", createProfileObj.getPassword());
             newProfile.put("ContactNo", createProfileObj.getContactNo());
             newProfile.put("CarNo", createProfileObj.getCarNo());
@@ -372,7 +372,7 @@ public class FirestoreDB {
         try{
             Map<String, Object> updateProfile = new HashMap<>();
             updateProfile.put("Name", updateProfileObj.getName());
-            updateProfile.put("Email", updateProfileObj.getEmail());
+            updateProfile.put("Email", updateProfileObj.getEmail().toLowerCase());
             updateProfile.put("Password", updateProfileObj.getPassword());
             updateProfile.put("ContactNo", updateProfileObj.getContactNo());
             updateProfile.put("CarNo", updateProfileObj.getCarNo());
@@ -405,11 +405,11 @@ public class FirestoreDB {
         try{
             Map<String, Object> deleteProfile = new HashMap<>();
             deleteProfile.put("Name", deleteProfileObj.getName());
-            deleteProfile.put("Email", deleteProfileObj.getEmail());
+            deleteProfile.put("Email", deleteProfileObj.getEmail().toLowerCase());
             deleteProfile.put("Password", deleteProfileObj.getPassword());
             deleteProfile.put("ContactNo", deleteProfileObj.getContactNo());
             deleteProfile.put("CarNo", deleteProfileObj.getCarNo());
-            String documentID = deleteProfileObj.getName();
+            String documentID = deleteProfileObj.getEmail(); //bug fix, earlier getName and changed to getEmail
             db.collection(COLLECTION_PROFILE)
                     .document(documentID)
                     .delete()
@@ -481,7 +481,7 @@ public class FirestoreDB {
     public void createLogin(Account ac) {
         try {
             Map<String, Object> data = new HashMap<>();
-            data.put("Email", ac.getEmail());
+            data.put("Email", ac.getEmail().toLowerCase());
             data.put("Password", ac.getPassword());
 
             db.collection(COLLECTION_LOGIN).add(data)
@@ -577,7 +577,7 @@ public class FirestoreDB {
         try {
             Map<String, Object> data = new HashMap<>();
             data.put("Name", ac.getName());
-            data.put("Email", ac.getEmail());
+            data.put("Email", ac.getEmail().toLowerCase());
             data.put("Password", ac.getPassword());
             data.put("ContactNo", ac.getContactNo());
             data.put("CarNo", ac.getCarNo());

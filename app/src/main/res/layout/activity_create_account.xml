@@ -5,7 +5,7 @@
     android:id="@+id/CreateAccount"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/among_us"
+    android:background="@drawable/baymax_2"
     tools:context=".CreateAccount">
 
     <Button
@@ -112,6 +112,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:text="@string/createAccContactLbl"
+        android:background="@color/white"
         android:textColor="#181819"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -141,6 +142,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:text="@string/createAccPwdLbl"
+        android:background="@color/white"
         android:textColor="#181819"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -154,6 +156,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
         android:text="@string/createAccNameLbl"
+        android:background="@color/white"
         android:textColor="#181819"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -167,6 +170,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
         android:text="@string/createAccEmailLbl"
+        android:background="@color/white"
         android:textColor="#181819"
         android:textSize="18sp"
         android:textStyle="bold"
