@@ -103,6 +103,7 @@
         android:id="@+id/addParkingFetchAddressBtn"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="@+id/addParkingAddressField"
         app:layout_constraintTop_toTopOf="@+id/addParkingAddressField"
         app:srcCompat="@android:drawable/ic_menu_send" />
