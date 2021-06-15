@@ -67,17 +67,8 @@ public class AddParking extends AppCompatActivity implements Serializable {
             editParkingObj = (Parking) getIntent().getSerializableExtra("EditParking");
             getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
             getWindow().setStatusBarColor(getResources().getColor(R.color.black));
-            // calling the action bar
-            ActionBar actionBar = getSupportActionBar();
-
-            // Customize the back button
-            actionBar.setHomeAsUpIndicator(R.drawable.back_icon);
-
-            // showing the back button in action bar
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            setTitle("Update Profile");
+            setTitle("Update Parking");
             setValues(editParkingObj);
-
             //Disabling fetch date button for update/edit parking since date should not be allowed to change
             this.binding.addParkingCalendarBtn.setVisibility(View.GONE);
         }
