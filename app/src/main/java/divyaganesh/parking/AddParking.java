@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +18,11 @@ import android.view.View;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import divyaganesh.parking.databinding.ActivityAddParkingBinding;
 import divyaganesh.parking.databinding.ActivityParkingListBinding;
@@ -39,6 +43,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
     private LocationHelper locationHelper;
     private Location currentLocation;
     private String obtainedAddress;
+    private double obtainedLat, obtainedLong;
 
     public boolean forEdit = false;
     public Parking editParkingObj;
@@ -105,11 +110,26 @@ public class AddParking extends AppCompatActivity implements Serializable {
                 fun.logCatD(TAG, "onClick: Fetch Current Location clicked");
                 fetchLocation();
                 clickedLocation = true;
-                binding.addParkingAddressField.setFocusable(false);
-                binding.addParkingFetchAddressBtn.setClickable(false);
+//                binding.addParkingAddressField.setFocusable(false);
+//                binding.addParkingFetchAddressBtn.setClickable(false);
                 binding.addParkingAddressField.setText("");
             }
         });
+
+        this.binding.addParkingFetchAddressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+//                    binding.addParkingFetchCurrentLocBtn.setClickable(false);
+                    binding.addParkingCurrentLocationField.setText("");
+                    fetchLatLong(binding.addParkingAddressField.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    fun.toastMessageLong(getApplicationContext(), "Exception " +e.getLocalizedMessage());
+                }
+            }
+        });
+
     }
 
     private void setValues(Parking parking){
@@ -173,6 +193,8 @@ public class AddParking extends AppCompatActivity implements Serializable {
                 public void onChanged(Location location) {
                     if(location != null){
                         currentLocation = location;
+                        obtainedLat = currentLocation.getLatitude();
+                        obtainedLong = currentLocation.getLongitude();
                         obtainedAddress = locationHelper.getAddress(getApplicationContext(),currentLocation);
                         binding.addParkingCurrentLocationField.setText(obtainedAddress);
                         binding.addParkingCurrentLocationField.setFocusable(false);
@@ -184,6 +206,29 @@ public class AddParking extends AppCompatActivity implements Serializable {
             });
         }
     }
+
+    public void fetchLatLong(String address) throws IOException {
+        Geocoder geocoder = new Geocoder(getApplicationContext());
+        String addressToSearch = address;
+        List<Address> fromLocationName = null;
+        fromLocationName = geocoder.getFromLocationName(addressToSearch, 1);
+        if (fromLocationName != null && fromLocationName.size() > 0) {
+            Address a = fromLocationName.get(0);
+            Log.d(TAG, "fetchLatLong: Address " +a);
+            this.obtainedLat = a.getLatitude();
+            this.obtainedLong = a.getLongitude();
+            this.obtainedAddress= a.getAddressLine(0);
+            Log.d(TAG, "fetchLatLong: Obtained " +obtainedAddress);
+            fun.toastMessageLong(getApplicationContext(), String.valueOf(this.obtainedLat));
+            fun.logCatD("Here Lat", String.valueOf(this.obtainedLat));
+            fun.logCatD("Here Long", String.valueOf(this.obtainedLong));
+            fun.toastMessageLong(getApplicationContext(),"Entered location is : " +obtainedAddress);
+        }else{
+            fun.logCatD("Here ", "No Value found");
+            fun.toastMessageLong(getApplicationContext(),"No address found with this!");
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -251,11 +296,15 @@ public class AddParking extends AppCompatActivity implements Serializable {
             toUpdate.setHostNo(this.binding.addParkingSuitField.getText().toString());
             //location part is tricky
             //need to implement address part
-            if(clickedLocation){
-                toUpdate.setAddress(this.obtainedAddress);
-                toUpdate.setLat(this.currentLocation.getLatitude());
-                toUpdate.setLong(this.currentLocation.getLongitude());
-            }
+//            if(clickedLocation){
+//                toUpdate.setAddress(this.obtainedAddress);
+//                toUpdate.setLat(this.currentLocation.getLatitude());
+//                toUpdate.setLong(this.currentLocation.getLongitude());
+//            }
+            //another method to save the location to DB - @Divya
+            toUpdate.setAddress(this.obtainedAddress);
+            toUpdate.setLat(this.obtainedLat);
+            toUpdate.setLong(this.obtainedLong);
             fun.logCatD("Here to", toUpdate.toString());
             //db call
             this.parkingCallDB.updateParkingDetails(toUpdate);
@@ -267,8 +316,8 @@ public class AddParking extends AppCompatActivity implements Serializable {
             this.parking.setDate(this.binding.addParkingDateField.getText().toString());
             this.parking.setEmail(this.email);
             this.parking.setAddress(this.obtainedAddress);
-            this.parking.setLat(this.currentLocation.getLatitude());
-            this.parking.setLong(this.currentLocation.getLongitude());
+            this.parking.setLat(this.obtainedLat);
+            this.parking.setLong(this.obtainedLong);
             this.parkingCallDB.addParkingDetails(this.parking);
         }
 
