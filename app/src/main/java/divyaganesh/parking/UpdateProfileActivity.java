@@ -123,8 +123,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
         binding.updateNameField.setText(account.getName());
         binding.updatePwdField.setText(account.getPassword());
         setImage(account.getImage());
-        String email_carNo = "You won't be able to modify email & licence no!"+
-                "\n"+ "Your email is - "+account.getEmail()+
+        String info = "You won't be able to modify email & licence no!";
+        binding.updateInfoLabel.setText(info);
+        String email_carNo = "Your email is - "+account.getEmail()+
                 "\n"+ "Your car number is - "+account.getCarNo();
         binding.updateEmailCarnoLabel.setText(email_carNo);
         method.logCatD(TAG, "Loaded data on to fields successfully!");

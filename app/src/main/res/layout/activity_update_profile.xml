@@ -11,23 +11,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/parkingTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:background="@color/black"
-            android:fontFamily="@font/schoolbell"
-            android:lineSpacingExtra="8sp"
-            android:text="@string/update_profile"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
 
         <ImageView
             android:id="@+id/update_profile_image"
@@ -37,17 +23,31 @@
             app:srcCompat="@drawable/profile1" />
 
         <TextView
+            android:id="@+id/update_info_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/design_default_color_error"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/sameText"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/update_email_carno_label"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="@color/black"
             android:fontFamily="@font/schoolbell"
             android:text="@string/sameText"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/design_default_color_error"
-            android:textSize="33sp" />
+            android:textSize="23sp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
