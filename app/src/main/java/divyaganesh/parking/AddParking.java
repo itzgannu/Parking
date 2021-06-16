@@ -43,7 +43,6 @@ public class AddParking extends AppCompatActivity implements Serializable {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private LocationHelper locationHelper;
-    private LocationCallback locationCallback;
     private Location currentLocation;
     private String obtainedAddress;
     private Double obtainedLat, obtainedLong;
@@ -63,7 +62,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
 
         Intent i = getIntent();
         this.forEdit = i.getBooleanExtra("forEdit", false);
-        if(forEdit){
+        if (forEdit) {
             editParkingObj = (Parking) getIntent().getSerializableExtra("EditParking");
             getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
             getWindow().setStatusBarColor(getResources().getColor(R.color.black));
@@ -119,14 +118,14 @@ public class AddParking extends AppCompatActivity implements Serializable {
                     fetchLatLong(binding.addParkingAddressField.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
-                    fun.toastMessageLong(getApplicationContext(), "Exception " +e.getLocalizedMessage());
+                    fun.toastMessageLong(getApplicationContext(), "Exception " + e.getLocalizedMessage());
                 }
             }
         });
 
     }
 
-    private void setValues(Parking parking){
+    private void setValues(Parking parking) {
         this.binding.addParkingBuildingField.setText(parking.getBuildingNo());
         this.binding.addParkingAddressField.setText(parking.getAddress());
         this.binding.addParkingDateField.setText(parking.getDate());
@@ -144,7 +143,6 @@ public class AddParking extends AppCompatActivity implements Serializable {
     protected void onResume() {
         super.onResume();
         fun.checkIfSignUserAvailable(this);
-        this.locationHelper.requestLocationUpdates(this, this.locationCallback);
     }
 
     @Override
@@ -157,10 +155,10 @@ public class AddParking extends AppCompatActivity implements Serializable {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_parking: {
-                if(checkFieldValidation()) {
+                if (checkFieldValidation()) {
                     fun.logCatD("AddParking", "onOptionsItemSelected: Save clicked");
                     saveToDB();
-                    fun.toastMessageLong(this,"Parking Details Saved to DB");
+                    fun.toastMessageLong(this, "Parking Details Saved to DB");
                     clearFields();
                     //Removed finish() because of bug - after first add parking, two items are displayed in parking list
                 }
@@ -185,33 +183,22 @@ public class AddParking extends AppCompatActivity implements Serializable {
     /*
     Function that fetches the current location
      */
-    public void fetchLocation(){
-        if(locationHelper.locationPermissionGranted){
-            locationHelper.getLastLocation(this).observe(this, new Observer<Location>() {
+    public void fetchLocation() {
+        if (locationHelper.locationPermissionGranted) {
+            locationHelper.getLocation(this).observe(this, new Observer<Location>() {
                 @Override
                 public void onChanged(Location location) {
-                    if(location != null){
-                        locationCallback = new LocationCallback(){
-                            @Override
-                            public void onLocationResult(LocationResult locationResult) {
-                                if(locationResult == null){
-                                    return;
-                                }
-                                for(Location loc : locationResult.getLocations()){
-                                    currentLocation = loc;
-                                    obtainedLat = currentLocation.getLatitude();
-                                    obtainedLong = currentLocation.getLongitude();
-                                    obtainedAddress = locationHelper.getAddress(getApplicationContext(),currentLocation);
-                                    binding.addParkingCurrentLocationField.setText(obtainedAddress);
-                                    binding.addParkingCurrentLocationField.setFocusable(false);
+                    if (location != null) {
+                        currentLocation = location;
+                        obtainedAddress = locationHelper.getCurrentAddress(getApplicationContext(), currentLocation);
+                        obtainedLat = currentLocation.getLatitude();
+                        obtainedLong = currentLocation.getLongitude();
+                        binding.addParkingCurrentLocationField.setText(obtainedAddress);
+                        binding.addParkingCurrentLocationField.setFocusable(false);
 
-                                    fun.logCatD("AddParking","LocationResult: "+loc.toString());
-                                }
-                            }
-                        };
-                        locationHelper.requestLocationUpdates(getApplicationContext(), locationCallback);
-                    }else {
-                        fun.logCatE("AddParking","Location Not available");
+                        fun.logCatD("AddParking", "LocationResult: " + currentLocation.toString());
+                    } else {
+                        fun.logCatE("AddParking", "Location Not available");
                     }
                 }
             });
@@ -256,12 +243,6 @@ public class AddParking extends AppCompatActivity implements Serializable {
                 fun.logCatD(TAG, "onCreate: Location Permission Granted" + this.locationHelper.locationPermissionGranted);
             }
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.locationHelper.stopLocationUpdates(this,this.locationCallback);
     }
 
     /*
@@ -326,6 +307,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
 //                toUpdate.setLat(this.currentLocation.getLatitude());
 //                toUpdate.setLong(this.currentLocation.getLongitude());
 //            }
+
             //another method to save the location to DB - @Divya
             toUpdate.setAddress(this.obtainedAddress);
             toUpdate.setLat(this.obtainedLat);
