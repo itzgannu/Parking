@@ -63,7 +63,8 @@ The below details about the progress in the project are specified in the ReadMe 
 # Screenshots
 
 ## Firebase Screenshot :
-![image](https://user-images.githubusercontent.com/80915452/119736632-a4dbab00-be9b-11eb-9b58-6dc6fd97b022.png)
+![database](https://user-images.githubusercontent.com/84138047/122304810-75acdc80-cf23-11eb-8a33-7f0c3f1cc451.JPG)
+
 
 ## App Screenshots :
 ### Sign In -
@@ -97,6 +98,10 @@ The below details about the progress in the project are specified in the ReadMe 
 
 ## ER-Diagram :
 ![Parking Android ED](https://user-images.githubusercontent.com/80915452/122117652-bda90200-ce44-11eb-9491-ecb54b5acc94.png)
+
+## Work Distribution :
+![work distribution](https://user-images.githubusercontent.com/84138047/122304838-81000800-cf23-11eb-957b-e30e3ac6b899.JPG)
+
 
 
 # Contributors 🌱
