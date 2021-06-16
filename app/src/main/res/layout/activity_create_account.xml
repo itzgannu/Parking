@@ -5,19 +5,19 @@
     android:id="@+id/CreateAccount"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/baymax_2"
+    android:background="@drawable/baymax"
     tools:context=".CreateAccount">
 
     <Button
         android:id="@+id/createAccBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="159dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="150dp"
         android:text="@string/createAccBtn"
         android:textColor="@color/white"
-        app:backgroundTint="@color/purple_700"
+        app:backgroundTint="@color/black"
         app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
@@ -27,168 +27,124 @@
 
     <EditText
         android:id="@+id/createAccContactField"
-        android:layout_width="308dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/createAccContactHint"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccContactLbl" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccPasswordField" />
 
     <EditText
         android:id="@+id/createAccLicenceField"
-        android:layout_width="304dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/createAccCarHint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccCarLbl" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccContactField" />
 
     <EditText
         android:id="@+id/createAccPasswordField"
-        android:layout_width="306dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/createAccPwdHint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccPwdLbl" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccEmailField" />
 
     <EditText
         android:id="@+id/createAccEmailField"
-        android:layout_width="304dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/createAccEmailHint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccEmailLbl" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccNameField" />
 
     <EditText
         android:id="@+id/createAccNameField"
-        android:layout_width="306dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/createAccNameHint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccNameLbl" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccProfilePictImg" />
 
-    <TextView
-        android:id="@+id/createAccContactLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
+    <ImageView
+        android:id="@+id/createAccNameImg"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="@string/createAccContactLbl"
-        android:background="@color/white"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccPasswordField" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccProfilePictImg"
+        app:srcCompat="@drawable/name" />
 
-    <TextView
-        android:id="@+id/createAccTitleLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/courgette"
-        android:text="@string/welcomeTitle"
-        android:textAlignment="center"
-        android:textColor="#181819"
-        android:textSize="25sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.416"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/createAccPwdLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
+    <ImageView
+        android:id="@+id/createAccEmailImg"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="@string/createAccPwdLbl"
-        android:background="@color/white"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccEmailField" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccNameImg"
+        app:srcCompat="@drawable/email" />
 
-    <TextView
-        android:id="@+id/createAccNameLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
+    <ImageView
+        android:id="@+id/createAccPasswordImg"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:text="@string/createAccNameLbl"
-        android:background="@color/white"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccTitleLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccEmailImg"
+        app:srcCompat="@drawable/password" />
 
-    <TextView
-        android:id="@+id/createAccEmailLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/createAccEmailLbl"
-        android:background="@color/white"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/createAccContactImg"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccNameField" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccPasswordImg"
+        app:srcCompat="@drawable/call" />
 
-    <TextView
-        android:id="@+id/createAccCarLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:text="@string/createAccCarLbl"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/createAccCarImg"
+        android:layout_width="78dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccContactField" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccContactImg"
+        app:srcCompat="@drawable/car_img" />
+
+    <ImageView
+        android:id="@+id/createAccProfilePictImg"
+        android:layout_width="176dp"
+        android:layout_height="138dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
