@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Looper;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -17,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,7 +29,7 @@ public class LocationHelper {
     private LocationRequest locationRequest;
     public final int request_code_location = 101;
     private FusedLocationProviderClient fusedLocationProviderClient = null;
-    MutableLiveData<Location> mLocation = new MutableLiveData<>();
+    MutableLiveData<Location> locationFetch = new MutableLiveData<>();
     RecursiveMethods fun = new RecursiveMethods();
 
     private static final LocationHelper ourInstance = new LocationHelper();
@@ -43,7 +40,7 @@ public class LocationHelper {
     private LocationHelper(){
         this.locationRequest = new LocationRequest();
         this.locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY); //indicates the accuracy
-        this.locationRequest.setInterval(300000); //will update the location every 300 seconds
+        this.locationRequest.setInterval(300000);
     }
 
     public void checkPermissions(Context context){
@@ -68,7 +65,7 @@ public class LocationHelper {
     }
 
     @SuppressLint("MissingPermission")
-    public MutableLiveData<Location> getLastLocation(Context context){
+    public MutableLiveData<Location> getLocation(Context context){
         if(this.locationPermissionGranted){
             try{
                 this.getFusedLocationProviderClient(context).getLastLocation()
@@ -76,8 +73,8 @@ public class LocationHelper {
                             @Override
                             public void onSuccess(Location location) {
                                 if(location != null){
-                                    mLocation.setValue(location);
-                                    fun.logCatD("LocationHelper","Last Location received : Lat :" +mLocation.getValue().getLatitude()+"Long : " +mLocation.getValue().getLongitude());
+                                    locationFetch.setValue(location);
+                                    fun.logCatD("LocationHelper","Last Location received : Lat :" +locationFetch.getValue().getLatitude()+"Long : " +locationFetch.getValue().getLongitude());
                                 }else{
                                     fun.logCatD("LocationHelper","Else");
                                 }
@@ -93,7 +90,7 @@ public class LocationHelper {
                 fun.logCatE("LocationHelper",e.getLocalizedMessage());
                 return null;
             }
-            return this.mLocation;
+            return this.locationFetch;
 
         }else{
             fun.logCatE("LocationHelper","App does not have access permission for location");
@@ -101,7 +98,7 @@ public class LocationHelper {
         }
     }
 
-    public String getAddress(Context context, Location loc){
+    public String getCurrentAddress(Context context, Location loc){
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         List<Address> addressList;
 
@@ -115,24 +112,5 @@ public class LocationHelper {
             fun.logCatE("LocationHelper","Address not fetched");
         }
         return null;
-    }
-
-    @SuppressLint("MissingPermission")
-    public void requestLocationUpdates(Context context, LocationCallback locationCallback){
-        if(this.locationPermissionGranted){
-            try{
-                this.getFusedLocationProviderClient(context).requestLocationUpdates(this.locationRequest, locationCallback, Looper.getMainLooper());
-            }catch(Exception e){
-                fun.logCatE("LocationHelper",e.getLocalizedMessage());
-            }
-        }
-    }
-
-    public void stopLocationUpdates(Context context, LocationCallback locationCallback){
-        try{
-            this.getFusedLocationProviderClient(context).removeLocationUpdates(locationCallback);
-        }catch(Exception e){
-            fun.logCatE("LocationHelper",e.getLocalizedMessage());
-        }
     }
 }
