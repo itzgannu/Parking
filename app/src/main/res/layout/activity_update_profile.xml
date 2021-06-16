@@ -45,8 +45,9 @@
             android:fontFamily="@font/crushed"
             android:text="@string/sameText"
             android:textAlignment="center"
+            android:textAllCaps="true"
             android:textColor="@color/teal_700"
-            android:textSize="20sp" />
+            android:textSize="33sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +63,9 @@
                 android:text="@string/createAccNameLbl"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="24dp" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
 
             <EditText
                 android:id="@+id/update_name_field"
@@ -89,7 +92,9 @@
                 android:text="@string/createAccPwdLbl"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp" />
 
             <EditText
                 android:id="@+id/update_pwd_field"
@@ -116,7 +121,9 @@
                 android:text="@string/createAccContactLbl"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp" />
 
             <EditText
                 android:id="@+id/update_contact_field"
