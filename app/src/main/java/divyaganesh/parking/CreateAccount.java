@@ -150,6 +150,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.account.setContactNo(this.binding.createAccContactField.getText().toString());
         this.account.setCarNo(this.binding.createAccLicenceField.getText().toString());
         this.account.setId(this.account.getEmail());
+        this.account.setImage(this.dbSetImage);
         this.user.isProfileAdded(this.account);
     }
 
@@ -165,7 +166,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         image = 0; selectedImage = 0; dbSetImage = 0;
         dialogBuilder = new AlertDialog.Builder(this);
         final View popUpView = getLayoutInflater().inflate(R.layout.image_selector, null);
-//        ImageSelectorBinding selectorBinding = ImageSelectorBinding.inflate(getLayoutInflater());
         imageButton1 = (ImageButton) popUpView.findViewById(R.id.imageButton1);
         imageButton2 = (ImageButton) popUpView.findViewById(R.id.imageButton2);
         imageButton3 = (ImageButton) popUpView.findViewById(R.id.imageButton3);
