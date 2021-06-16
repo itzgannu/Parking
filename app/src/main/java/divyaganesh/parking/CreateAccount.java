@@ -1,11 +1,15 @@
 package divyaganesh.parking;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import divyaganesh.parking.databinding.ActivityCreateAccountBinding;
+import divyaganesh.parking.databinding.ImageSelectorBinding;
 import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Account;
 import divyaganesh.parking.viewmodels.UsersViewModel;
@@ -19,6 +23,16 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     RecursiveMethods method = new RecursiveMethods();
     private final String TAG = this.getClass().getCanonicalName();
 
+    //to select image
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    ImageButton imageButton1, imageButton2, imageButton3, imageButton4, imageButton5, imageButton6;
+    Button save, cancel;
+    int image = 0;
+    int selectedImage = 0;
+    int dbSetImage = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +41,14 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         View view = this.binding.getRoot();
         setContentView(view);
 
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
+        image = 0; selectedImage = 0; dbSetImage = 0;
+
         this.user = UsersViewModel.getInstance(this.getApplication());
         this.binding.createAccBtn.setOnClickListener(this);
+        this.binding.createAccProfilePictImg.setOnClickListener(this);
 
         this.account = new Account();
     }
@@ -82,6 +102,9 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                     }
                     break;
                 }
+                case R.id.createAccProfilePictImg:{
+                    createDialogPopUpView();
+                }
             }
         }
     }
@@ -130,12 +153,112 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         this.account.setContactNo(this.binding.createAccContactField.getText().toString());
         this.account.setCarNo(this.binding.createAccLicenceField.getText().toString());
         this.account.setId(this.account.getEmail());
+        this.account.setImage(this.dbSetImage);
         this.user.isProfileAdded(this.account);
     }
 
     private boolean checkLicenceNo(String licence){
         String licenceRegex = "^\\w{2,8}$";
         return licence != null && licence.matches(licenceRegex);
+    }
+
+    /**
+     * DIALOG POPUP
+     */
+    public void createDialogPopUpView(){
+        image = 0; selectedImage = 0; dbSetImage = 0;
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View popUpView = getLayoutInflater().inflate(R.layout.image_selector, null);
+        imageButton1 = (ImageButton) popUpView.findViewById(R.id.imageButton1);
+        imageButton2 = (ImageButton) popUpView.findViewById(R.id.imageButton2);
+        imageButton3 = (ImageButton) popUpView.findViewById(R.id.imageButton3);
+        imageButton4 = (ImageButton) popUpView.findViewById(R.id.imageButton4);
+        imageButton5 = (ImageButton) popUpView.findViewById(R.id.imageButton5);
+        imageButton6 = (ImageButton) popUpView.findViewById(R.id.imageButton6);
+
+        save = (Button) popUpView.findViewById(R.id.selectImage);
+        cancel = (Button) popUpView.findViewById(R.id.cancelImage);
+
+        dialogBuilder.setView(popUpView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+        
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image = 0;
+                dbSetImage = image;
+                dialog.dismiss();
+            }
+        });
+
+        imageButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image = 1;
+            }
+        });
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image = 2;
+            }
+        });
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image = 3;
+            }
+        });
+        imageButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image = 4;
+            }
+        });
+        imageButton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image = 5;
+            }
+        });
+        imageButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image = 6;
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(image == 0 ){
+                    method.toastMessageShort(getApplicationContext(), "Click on any Image to select");
+                }else{
+                    selectedImage = image;
+                    dbSetImage = image;
+                    method.toastMessageShort(getApplicationContext(), "Selected image - "+selectedImage);
+                    dialog.dismiss();
+                    setImage(image);
+                }
+            }
+        });
+    }
+
+    private void setImage(int i){
+        if(i == 0 || i == 1){
+            this.binding.createAccProfilePictImg.setImageResource(R.drawable.profile1);
+        }else if(i == 2){
+            this.binding.createAccProfilePictImg.setImageResource(R.drawable.profile2);
+        }else if(i == 3){
+            this.binding.createAccProfilePictImg.setImageResource(R.drawable.profile3);
+        }else if(i == 4){
+            this.binding.createAccProfilePictImg.setImageResource(R.drawable.profile4);
+        }else if(i == 5){
+            this.binding.createAccProfilePictImg.setImageResource(R.drawable.profile5);
+        }else if(i == 6){
+            this.binding.createAccProfilePictImg.setImageResource(R.drawable.profile6);
+        }
     }
 
     /**

@@ -292,7 +292,8 @@ public class FirestoreDB {
             newProfile.put("Password", createProfileObj.getPassword());
             newProfile.put("ContactNo", createProfileObj.getContactNo());
             newProfile.put("CarNo", createProfileObj.getCarNo());
-            String name = createProfileObj.getEmail();
+            newProfile.put("Image", createProfileObj.getImage());
+            String name = createProfileObj.getEmail().toLowerCase();
             db.collection(COLLECTION_PROFILE)
                     .document(name)
                     .set(newProfile)
@@ -376,6 +377,7 @@ public class FirestoreDB {
             updateProfile.put("Password", updateProfileObj.getPassword());
             updateProfile.put("ContactNo", updateProfileObj.getContactNo());
             updateProfile.put("CarNo", updateProfileObj.getCarNo());
+            updateProfile.put("Image", updateProfileObj.getImage());
             String documentID = updateProfileObj.getEmail();
             db.collection(COLLECTION_PROFILE)
                     .document(documentID)
@@ -409,6 +411,7 @@ public class FirestoreDB {
             deleteProfile.put("Password", deleteProfileObj.getPassword());
             deleteProfile.put("ContactNo", deleteProfileObj.getContactNo());
             deleteProfile.put("CarNo", deleteProfileObj.getCarNo());
+            deleteProfile.put("Image", deleteProfileObj.getImage());
             String documentID = deleteProfileObj.getEmail(); //bug fix, earlier getName and changed to getEmail
             db.collection(COLLECTION_PROFILE)
                     .document(documentID)

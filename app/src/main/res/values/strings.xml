@@ -11,7 +11,7 @@
     <string name="createAccNameLbl">Name</string>
     <string name="createAccEmailLbl">Email</string>
     <string name="createAccPwdLbl">Password</string>
-    <string name="createAccContactLbl">Contact Number</string>
+    <string name="createAccContactLbl">Contact</string>
     <string name="createAccCarLbl">Car Licence Plate Number</string>
     <string name="createAccBtn">Create Account</string>
     <string name="createAccNameHint">Enter your name</string>
@@ -49,4 +49,6 @@
     <string name="map_redirect">map redirect</string>
     <string name="delete_record">Delete Record</string>
     <string name="edit_record">Edit Record</string>
+    <string name="select_profile_image_from_below">SELECT PROFILE IMAGE FROM BELOW</string>
+    <string name="set">SET</string>
 </resources>

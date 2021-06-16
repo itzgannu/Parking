@@ -6,6 +6,7 @@ public class Account {
     private String Password;
     private String ContactNo;
     private String CarNo;
+    private int Image;
     private String id;
 
     public Account(){
@@ -20,9 +21,18 @@ public class Account {
                 ", Password='" + Password + '\'' +
                 ", ContactNo='" + ContactNo + '\'' +
                 ", CarNo='" + CarNo + '\'' +
+                ", image=" + Image +
+                ", id='" + id + '\'' +
                 '}';
     }
 
+    public int getImage() {
+        return Image;
+    }
+
+    public void setImage(int image) {
+        this.Image = image;
+    }
     public Account(String name, String email, String password, String contactNo, String carNo) {
         Name = name;
         Email = email;

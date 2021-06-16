@@ -5,7 +5,9 @@
     android:id="@+id/AddParking"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/baymax"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/baymax_3"
     tools:context=".AddParking">
 
     <EditText

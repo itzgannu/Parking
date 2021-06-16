@@ -51,6 +51,9 @@ public class ParkingDetails extends AppCompatActivity implements OnMapReadyCallb
 
         fun.checkIfSignUserAvailable(this);
 
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
         detailParkingObj = (Parking) getIntent().getSerializableExtra("Parking");
         //added assert as it was showing in suggestion
         assert detailParkingObj != null;

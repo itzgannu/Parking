@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         userLoggedIn();
 
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
         this.usersViewModel = UsersViewModel.getInstance(this.getApplication());
         profileList.clear();
         this.usersViewModel.getAllProfiles();
