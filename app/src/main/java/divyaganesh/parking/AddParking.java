@@ -67,13 +67,14 @@ public class AddParking extends AppCompatActivity implements Serializable {
         this.forEdit = i.getBooleanExtra("forEdit", false);
         if (forEdit) {
             editParkingObj = (Parking) getIntent().getSerializableExtra("EditParking");
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
-            getWindow().setStatusBarColor(getResources().getColor(R.color.black));
             setTitle("Update Parking");
             setValues(editParkingObj);
             //Disabling fetch date button for update/edit parking since date should not be allowed to change
             this.binding.addParkingCalendarBtn.setVisibility(View.GONE);
         }
+
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         this.parking = new Parking();
         this.parkingCallDB = ParkingViewModel.getInstance(this.getApplication());

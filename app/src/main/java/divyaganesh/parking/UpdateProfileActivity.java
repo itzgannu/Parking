@@ -48,6 +48,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         this.currentUser = method.getCurrentUser(this);
 
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
         this.usersViewModel = UsersViewModel.getInstance(this.getApplication());
         this.parkingViewModel = ParkingViewModel.getInstance(this.getApplication());
 

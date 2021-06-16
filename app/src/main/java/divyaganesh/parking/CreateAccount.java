@@ -41,6 +41,9 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         View view = this.binding.getRoot();
         setContentView(view);
 
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
         image = 0; selectedImage = 0; dbSetImage = 0;
 
         this.user = UsersViewModel.getInstance(this.getApplication());

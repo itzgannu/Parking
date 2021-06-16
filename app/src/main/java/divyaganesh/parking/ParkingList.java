@@ -60,6 +60,11 @@ public class ParkingList extends AppCompatActivity {
 
         fun.checkIfSignUserAvailable(this);
 
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+        
+        setTitle("WELCOME");
+
         ifFromDelete();
 
         currentUser = fun.getCurrentUser(this);
