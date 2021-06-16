@@ -49,4 +49,6 @@
     <string name="map_redirect">map redirect</string>
     <string name="delete_record">Delete Record</string>
     <string name="edit_record">Edit Record</string>
+    <string name="select_profile_image_from_below">SELECT PROFILE IMAGE FROM BELOW</string>
+    <string name="set">SET</string>
 </resources>
