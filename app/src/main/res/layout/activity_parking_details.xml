@@ -13,7 +13,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:background="@color/black"
-        android:fontFamily="cursive"
+        android:fontFamily="@font/schoolbell"
         android:text="@string/parked_vehicle_details"
         android:textAlignment="center"
         android:textColor="@color/white"
