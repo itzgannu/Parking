@@ -91,10 +91,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.update_delete: {
-                method.toastMessageLong(this,"Clicked on update profile");
-                this.usersViewModel.deleteProfile(matchedAccount);
+                //as suggested by prof jigisha
                 String email = matchedAccount.getEmail();
                 this.parkingViewModel.deleteParkingLinkedToEmail(email);
+                method.toastMessageLong(this,"Clicked on update profile");
+                this.usersViewModel.deleteProfile(matchedAccount);
                 method.signOut(this);
                 break;
             }
