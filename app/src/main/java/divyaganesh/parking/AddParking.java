@@ -1,7 +1,6 @@
 package divyaganesh.parking;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
@@ -16,10 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -27,7 +22,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import divyaganesh.parking.databinding.ActivityAddParkingBinding;
-import divyaganesh.parking.databinding.ActivityParkingListBinding;
 import divyaganesh.parking.helpers.LocationHelper;
 import divyaganesh.parking.helpers.RecursiveMethods;
 import divyaganesh.parking.model.Parking;
@@ -36,22 +30,28 @@ import divyaganesh.parking.viewmodels.ParkingViewModel;
 public class AddParking extends AppCompatActivity implements Serializable {
 
     ActivityAddParkingBinding binding;
+
+    RecursiveMethods fun = new RecursiveMethods();
     private final String TAG = this.getClass().getCanonicalName();
+
     private Parking parking;
     private ParkingViewModel parkingCallDB;
+
+    public boolean forEdit = false;
+    public Parking editParkingObj;
+
     private String email;
+
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
+
     private LocationHelper locationHelper;
     private Location currentLocation;
     private String obtainedAddress;
     private Double obtainedLat, obtainedLong;
 
-    public boolean forEdit = false;
-    public Parking editParkingObj;
-
-    private boolean clickedLocation = false;
-    RecursiveMethods fun = new RecursiveMethods();
+    private boolean checkedForCurrentLocation = false;
+    private boolean checkedLocationWithAddress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,9 @@ public class AddParking extends AppCompatActivity implements Serializable {
 
         this.binding = ActivityAddParkingBinding.inflate(getLayoutInflater());
         setContentView(this.binding.getRoot());
+
+        checkedForCurrentLocation = false;
+        checkedLocationWithAddress = false;
 
         Intent i = getIntent();
         this.forEdit = i.getBooleanExtra("forEdit", false);
@@ -74,7 +77,6 @@ public class AddParking extends AppCompatActivity implements Serializable {
 
         this.parking = new Parking();
         this.parkingCallDB = ParkingViewModel.getInstance(this.getApplication());
-
 
         this.email = fun.getCurrentUser(this);
 
@@ -100,11 +102,10 @@ public class AddParking extends AppCompatActivity implements Serializable {
         this.binding.addParkingFetchCurrentLocBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkedForCurrentLocation = true;
+                checkedLocationWithAddress = false;
                 fun.logCatD(TAG, "onClick: Fetch Current Location clicked");
                 fetchLocation();
-                clickedLocation = true;
-//                binding.addParkingAddressField.setFocusable(false);
-//                binding.addParkingFetchAddressBtn.setClickable(false);
                 binding.addParkingAddressField.setText("");
             }
         });
@@ -112,31 +113,21 @@ public class AddParking extends AppCompatActivity implements Serializable {
         this.binding.addParkingFetchAddressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkedForCurrentLocation = false;
+                checkedLocationWithAddress = true;
                 try {
-//                    binding.addParkingFetchCurrentLocBtn.setClickable(false);
                     binding.addParkingCurrentLocationField.setText("");
-                    fetchLatLong(binding.addParkingAddressField.getText().toString());
+                    if(! binding.addParkingAddressField.getText().toString().isEmpty()){
+                        fetchLatLong(binding.addParkingAddressField.getText().toString());
+                    } else{
+                        fun.toastMessageShort(getApplicationContext(), "Address field is empty!");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     fun.toastMessageLong(getApplicationContext(), "Exception " + e.getLocalizedMessage());
                 }
             }
         });
-
-    }
-
-    private void setValues(Parking parking) {
-        this.binding.addParkingBuildingField.setText(parking.getBuildingNo());
-        this.binding.addParkingAddressField.setText(parking.getAddress());
-        this.binding.addParkingDateField.setText(parking.getDate());
-        this.binding.addParkingHoursField.setText(parking.getHours());
-        this.binding.addParkingSuitField.setText(parking.getHostNo());
-        this.binding.addParkingLicenceField.setText(parking.getCarNo());
-        this.binding.addParkingCurrentLocationField.setText(parking.getAddress());
-        //disable
-        this.binding.addParkingLicenceField.setFocusable(false);
-        this.binding.addParkingCalendarBtn.setClickable(false);
-        this.binding.addParkingDateField.setFocusable(false);
     }
 
     @Override
@@ -145,6 +136,9 @@ public class AddParking extends AppCompatActivity implements Serializable {
         fun.checkIfSignUserAvailable(this);
     }
 
+    /**
+     * MENU ITEM RELATED
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_parking_menu, menu);
@@ -180,10 +174,32 @@ public class AddParking extends AppCompatActivity implements Serializable {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == this.locationHelper.request_code_location){
+            this.locationHelper.locationPermissionGranted = (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+
+            if(this.locationHelper.locationPermissionGranted){
+                //fetch the device location
+                fun.logCatD(TAG, "onCreate: Location Permission Granted" + this.locationHelper.locationPermissionGranted);
+            }
+        }
+    }
+
+    /**
+     * LOCATION FUNCTIONS
+     */
     /*
     Function that fetches the current location
      */
     public void fetchLocation() {
+        if(checkedLocationWithAddress){
+            obtainedAddress = null;
+            obtainedLat = null;
+            obtainedLong = null;
+        }
         if (locationHelper.locationPermissionGranted) {
             locationHelper.getLocation(this).observe(this, new Observer<Location>() {
                 @Override
@@ -204,11 +220,15 @@ public class AddParking extends AppCompatActivity implements Serializable {
             });
         }
     }
-
     /*
     Function that fetches the lat & long and the address based on the input from user
      */
     public void fetchLatLong(String address) throws IOException {
+        if(checkedForCurrentLocation){
+            obtainedAddress = null;
+            obtainedLat = null;
+            obtainedLong = null;
+        }
         Geocoder geocoder = new Geocoder(getApplicationContext());
         String addressToSearch = address;
         List<Address> fromLocationName = null;
@@ -230,21 +250,74 @@ public class AddParking extends AppCompatActivity implements Serializable {
         }
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(requestCode == this.locationHelper.request_code_location){
-            this.locationHelper.locationPermissionGranted = (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
-
-            if(this.locationHelper.locationPermissionGranted){
-                //fetch the device location
-                fun.logCatD(TAG, "onCreate: Location Permission Granted" + this.locationHelper.locationPermissionGranted);
-            }
-        }
+    /**
+     * DISPLAY VALUES in FIELDS
+     */
+    private void setValues(Parking parking) {
+        this.binding.addParkingBuildingField.setText(parking.getBuildingNo());
+        this.binding.addParkingAddressField.setText(parking.getAddress());
+        this.binding.addParkingDateField.setText(parking.getDate());
+        this.binding.addParkingHoursField.setText(parking.getHours());
+        this.binding.addParkingSuitField.setText(parking.getHostNo());
+        this.binding.addParkingLicenceField.setText(parking.getCarNo());
+        this.binding.addParkingCurrentLocationField.setText(parking.getAddress());
+        //disable
+        this.binding.addParkingLicenceField.setFocusable(false);
+        this.binding.addParkingCalendarBtn.setClickable(false);
+        this.binding.addParkingDateField.setFocusable(false);
+    }
+    private void clearFields(){
+        this.binding.addParkingBuildingField.getText().clear();
+        this.binding.addParkingHoursField.getText().clear();
+        this.binding.addParkingLicenceField.getText().clear();
+        this.binding.addParkingSuitField.getText().clear();
+        this.binding.addParkingDateField.getText().clear();
+        this.binding.addParkingCurrentLocationField.getText().clear();
+        this.binding.addParkingAddressField.getText().clear();
     }
 
+    /**
+     * FIREBASE CALL
+     */
+    /*
+    @saveToDB function : to save the add parking details to firebase
+     */
+    public void saveToDB(){
+        fun.logCatD(TAG, "saveToDB: Calling Save to DB");
+
+        if(forEdit){
+            Parking toUpdate = editParkingObj;
+            fun.logCatD("Here to", editParkingObj.toString());
+            toUpdate.setBuildingNo(this.binding.addParkingBuildingField.getText().toString());
+            toUpdate.setHours(this.binding.addParkingHoursField.getText().toString());
+            toUpdate.setHostNo(this.binding.addParkingSuitField.getText().toString());
+
+            //another method to save the location to DB - @Divya
+            toUpdate.setAddress(this.obtainedAddress);
+            toUpdate.setLat(this.obtainedLat);
+            toUpdate.setLong(this.obtainedLong);
+            fun.logCatD("Here to", toUpdate.toString());
+            //db call
+            this.parkingCallDB.updateParkingDetails(toUpdate);
+        }else{
+            this.parking.setBuildingNo(this.binding.addParkingBuildingField.getText().toString());
+            this.parking.setHours(this.binding.addParkingHoursField.getText().toString());
+            this.parking.setCarNo(this.binding.addParkingLicenceField.getText().toString());
+            this.parking.setHostNo(this.binding.addParkingSuitField.getText().toString());
+            this.parking.setDate(this.binding.addParkingDateField.getText().toString());
+            this.parking.setEmail(this.email);
+            this.parking.setAddress(this.obtainedAddress);
+            this.parking.setLat(this.obtainedLat);
+            this.parking.setLong(this.obtainedLong);
+            this.parkingCallDB.addParkingDetails(this.parking);
+        }
+
+
+    }
+
+    /**
+     * FIELD VALIDATIONS
+     */
     /*
     @checkFieldValidation function : to check the field validations
      */
@@ -286,61 +359,6 @@ public class AddParking extends AppCompatActivity implements Serializable {
         }
         return isValid;
     }
-
-    /*
-    @saveToDB function : to save the add parking details to firebase
-     */
-
-    public void saveToDB(){
-        fun.logCatD(TAG, "saveToDB: Calling Save to DB");
-
-        if(forEdit){
-            Parking toUpdate = editParkingObj;
-            fun.logCatD("Here to", editParkingObj.toString());
-            toUpdate.setBuildingNo(this.binding.addParkingBuildingField.getText().toString());
-            toUpdate.setHours(this.binding.addParkingHoursField.getText().toString());
-            toUpdate.setHostNo(this.binding.addParkingSuitField.getText().toString());
-            //location part is tricky
-            //need to implement address part
-//            if(clickedLocation){
-//                toUpdate.setAddress(this.obtainedAddress);
-//                toUpdate.setLat(this.currentLocation.getLatitude());
-//                toUpdate.setLong(this.currentLocation.getLongitude());
-//            }
-
-            //another method to save the location to DB - @Divya
-            toUpdate.setAddress(this.obtainedAddress);
-            toUpdate.setLat(this.obtainedLat);
-            toUpdate.setLong(this.obtainedLong);
-            fun.logCatD("Here to", toUpdate.toString());
-            //db call
-            this.parkingCallDB.updateParkingDetails(toUpdate);
-        }else{
-            this.parking.setBuildingNo(this.binding.addParkingBuildingField.getText().toString());
-            this.parking.setHours(this.binding.addParkingHoursField.getText().toString());
-            this.parking.setCarNo(this.binding.addParkingLicenceField.getText().toString());
-            this.parking.setHostNo(this.binding.addParkingSuitField.getText().toString());
-            this.parking.setDate(this.binding.addParkingDateField.getText().toString());
-            this.parking.setEmail(this.email);
-            this.parking.setAddress(this.obtainedAddress);
-            this.parking.setLat(this.obtainedLat);
-            this.parking.setLong(this.obtainedLong);
-            this.parkingCallDB.addParkingDetails(this.parking);
-        }
-
-
-    }
-
-    private void clearFields(){
-        this.binding.addParkingBuildingField.getText().clear();
-        this.binding.addParkingHoursField.getText().clear();
-        this.binding.addParkingLicenceField.getText().clear();
-        this.binding.addParkingSuitField.getText().clear();
-        this.binding.addParkingDateField.getText().clear();
-        this.binding.addParkingCurrentLocationField.getText().clear();
-        this.binding.addParkingAddressField.getText().clear();
-    }
-
     /*
     @regex functions : contains all the field validation checks using the regular expressions
      */
@@ -348,18 +366,14 @@ public class AddParking extends AppCompatActivity implements Serializable {
         String buildRegex = "^\\w{5}$";
         return buildNo != null && buildNo.matches(buildRegex);
     }
-
     private boolean checkHours(String hours){
         String hoursRegex = "^\\b((\\d+(\\.\\d+)?)\\s*(h|hr|hrs?|hours?))?(\\s*(\\d+)\\s*(m|min|mins?|minutes?))?\\b";
-        String hoursRegexN = "^[0-9]+$";
         return hours != null && hours.matches(hoursRegex);
     }
-
     private boolean checkLicenceNo(String licence){
         String licenceRegex = "^\\w{2,8}$";
         return licence != null && licence.matches(licenceRegex);
     }
-
     private boolean checkSuitNo(String suitNo){
         String suitRegex = "^[a-zA-Z0-9_]{2,5}$";
         return  suitNo != null && suitNo.matches(suitRegex);
