@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import divyaganesh.parking.databinding.ActivityCreateAccountBinding;
 import divyaganesh.parking.databinding.ImageSelectorBinding;
@@ -26,7 +27,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     //to select image
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
-    ImageButton imageButton1, imageButton2, imageButton3, imageButton4, imageButton5, imageButton6;
+    ImageView imageButton1, imageButton2, imageButton3, imageButton4, imageButton5, imageButton6;
     Button save, cancel;
     int image = 0;
     int selectedImage = 0;
@@ -45,6 +46,8 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         image = 0; selectedImage = 0; dbSetImage = 0;
+
+        this.binding.createAccProfilePictImg.setImageResource(R.drawable.profile1);
 
         this.user = UsersViewModel.getInstance(this.getApplication());
         this.binding.createAccBtn.setOnClickListener(this);

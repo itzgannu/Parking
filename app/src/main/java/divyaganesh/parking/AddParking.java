@@ -70,7 +70,7 @@ public class AddParking extends AppCompatActivity implements Serializable {
             setTitle("Update Parking");
             setValues(editParkingObj);
             //Disabling fetch date button for update/edit parking since date should not be allowed to change
-            this.binding.addParkingCalendarBtn.setVisibility(View.GONE);
+//            this.binding.addParkingCalendarBtn.setVisibility(View.GONE);
         }
 
         getWindow().setNavigationBarColor(getResources().getColor(R.color.teal_700));
@@ -93,10 +93,14 @@ public class AddParking extends AppCompatActivity implements Serializable {
         this.binding.addParkingCalendarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-                String date = dateFormat.format(calendar.getTime());
-                binding.addParkingDateField.setText(date);
-                binding.addParkingDateField.setFocusable(false);
+                if(forEdit){
+
+                }else{
+                    dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                    String date = dateFormat.format(calendar.getTime());
+                    binding.addParkingDateField.setText(date);
+//                    binding.addParkingDateField.setFocusable(false);
+                }
             }
         });
 

@@ -36,7 +36,7 @@
     <string name="addParkDateHint">Click to fetch date</string>
     <string name="addParkLocationHint">Fetch current location</string>
     <string name="addParkAddressHint">Enter address</string>
-    <string name="addParkOR">OR</string>
+    <string name="addParkOR">( OR )</string>
 
     <string name="parkingListTitle">Parking List</string>
     <string name="sameText">SAMPLE TEXT</string>

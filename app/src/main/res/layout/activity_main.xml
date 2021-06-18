@@ -1,110 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/SignIn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/car_login"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@drawable/car_login"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/signInCreateAccBtn"
-        android:layout_width="378dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/createAccBtn"
-        app:backgroundTint="#676458"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInBtn" />
-
-    <Button
-        android:id="@+id/signInBtn"
-        android:layout_width="95dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/signInBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInPwdField" />
-
-    <EditText
-        android:id="@+id/signInPwdField"
-        android:layout_width="313dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/createAccPwdHint"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInPwdLbl" />
-
-    <EditText
-        android:id="@+id/signInEmailField"
-        android:layout_width="313dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/createAccEmailHint"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInEmailLbl" />
-
-    <TextView
-        android:id="@+id/signInPwdLbl"
-        android:layout_width="96dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="45dp"
-        android:text="@string/signInPwdLabel"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInEmailField" />
-
-    <TextView
-        android:id="@+id/signInTitleLbl"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/schoolbell"
-        android:text="@string/signInTitle"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#181819"
-        android:textSize="36sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/signInTitleLbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/schoolbell"
+            android:text="@string/signInTitle"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#181819"
+            android:textSize="44sp"
+            android:textStyle="bold|italic"
+            android:layout_marginBottom="80dp"/>
 
-    <TextView
-        android:id="@+id/signInEmailLbl"
-        android:layout_width="96dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/signInUnLabel"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInTitleLbl" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/signInEmailLbl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:fontFamily="@font/schoolbell"
+                android:text="@string/signInUnLabel"
+                android:textAlignment="center"
+                android:textColor="#181819"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/signInEmailField"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:background="@drawable/round_edit"
+                android:paddingLeft="5sp"
+                android:ems="10"
+                android:hint="@string/createAccEmailHint"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/signInPwdLbl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:fontFamily="@font/schoolbell"
+                android:text="@string/signInPwdLabel"
+                android:textAlignment="center"
+                android:textColor="#181819"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/signInPwdField"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:background="@drawable/round_edit"
+                android:paddingLeft="5sp"
+                android:ems="10"
+                android:hint="@string/createAccPwdHint"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/signInBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:text="@string/signInBtn" />
+
+        <Button
+            android:id="@+id/signInCreateAccBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/createAccBtn"
+            android:layout_marginBottom="100dp"/>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

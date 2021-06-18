@@ -1,240 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/AddParking"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/baymax"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@drawable/baymax_3"
+    android:orientation="vertical"
     tools:context=".AddParking">
 
-    <EditText
-        android:id="@+id/addParkingLicenceField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="35dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/createAccCarHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingHoursField" />
-
-    <EditText
-        android:id="@+id/addParkingSuitField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="35dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkSuitHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingLicenceField" />
-
-    <EditText
-        android:id="@+id/addParkingHoursField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="35dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkHoursHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingBuildingField" />
-
-    <EditText
-        android:id="@+id/addParkingBuildingField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="80dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkBuildingHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/addParkingDateField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="35dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkDateHint"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingSuitField" />
-
-    <EditText
-        android:id="@+id/addParkingCurrentLocationField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="35dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkLocationHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingDateField" />
-
-    <EditText
-        android:id="@+id/addParkingAddressField"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="15dp"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:hint="@string/addParkAddressHint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingORLbl" />
-
-    <ImageButton
-        android:id="@+id/addParkingFetchAddressBtn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="@+id/addParkingAddressField"
-        app:layout_constraintTop_toTopOf="@+id/addParkingAddressField"
-        app:srcCompat="@android:drawable/ic_menu_send" />
-
-    <ImageButton
-        android:id="@+id/addParkingFetchCurrentLocBtn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintEnd_toEndOf="@+id/addParkingCurrentLocationField"
-        app:layout_constraintTop_toTopOf="@+id/addParkingCurrentLocationField"
-        app:srcCompat="@android:drawable/ic_menu_mylocation" />
-
-    <ImageButton
-        android:id="@+id/addParkingCalendarBtn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintEnd_toEndOf="@+id/addParkingDateField"
-        app:layout_constraintTop_toTopOf="@+id/addParkingDateField"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-    <TextView
-        android:id="@+id/addParkingAddressLbl"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/addParkAddressLbl"
-        android:textAlignment="viewStart"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingORLbl" />
-
-    <TextView
-        android:id="@+id/addParkingSuitLbl"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/addParkSuitNo"
-        android:textAlignment="viewStart"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingLicenceLbl" />
-
-    <TextView
-        android:id="@+id/addParkingDateLbl"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/addParkDate"
-        android:textAlignment="viewStart"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingSuitLbl" />
-
-    <TextView
-        android:id="@+id/addParkingBuildLbl"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="85dp"
-        android:text="@string/addParkBuildingNo"
-        android:textAlignment="viewStart"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/addParkingHoursLbl"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/addParkHours"
-        android:textAlignment="viewStart"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingBuildLbl" />
-
-    <TextView
-        android:id="@+id/addParkingLicenceLbl"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/addParkCarNo"
-        android:textAlignment="viewStart"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingHoursLbl" />
-
-    <TextView
-        android:id="@+id/addParkingCurrentLocationLbl"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/addParkLocation"
-        android:textAlignment="viewStart"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingDateLbl" />
-
-    <TextView
-        android:id="@+id/addParkingORLbl"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/addParkOR"
-        android:textColor="#181819"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addParkingCurrentLocationLbl" />
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingBuildLbl"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:text="@string/addParkBuildingNo"
+                android:textAlignment="viewEnd"
+                android:textColor="#181819"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addParkingBuildingField"
+                android:layout_width="0dp"
+                android:layout_weight="70"
+                android:layout_marginStart="10dp"
+                android:paddingStart="5sp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_edit"
+                android:ems="10"
+                android:hint="@string/addParkBuildingHint"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingHoursLbl"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:text="@string/addParkHours"
+                android:textAlignment="viewEnd"
+                android:textColor="#181819"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addParkingHoursField"
+                android:layout_width="0dp"
+                android:layout_weight="70"
+                android:layout_marginStart="10dp"
+                android:paddingStart="5sp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_edit"
+                android:ems="10"
+                android:hint="@string/addParkHoursHint"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingLicenceLbl"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:text="@string/addParkCarNo"
+                android:textAlignment="viewEnd"
+                android:textColor="#181819"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addParkingLicenceField"
+                android:layout_width="0dp"
+                android:layout_weight="70"
+                android:layout_marginStart="10dp"
+                android:paddingStart="5sp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_edit"
+                android:ems="10"
+                android:hint="@string/createAccCarHint"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingSuitLbl"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:text="@string/addParkSuitNo"
+                android:textAlignment="viewEnd"
+                android:textColor="#181819"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addParkingSuitField"
+                android:layout_width="0dp"
+                android:layout_weight="70"
+                android:layout_marginStart="10dp"
+                android:paddingStart="5sp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_edit"
+                android:ems="10"
+                android:hint="@string/addParkSuitHint"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingDateLbl"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:text="@string/addParkDate"
+                android:textAlignment="viewEnd"
+                android:textColor="#181819"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addParkingDateField"
+                android:layout_width="0dp"
+                android:layout_weight="60"
+                android:layout_marginStart="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_edit"
+                android:ems="10"
+                android:paddingStart="5sp"
+                android:hint="@string/addParkDateHint"
+                android:inputType="date" />
+
+            <ImageView
+                android:id="@+id/addParkingCalendarBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:background="@android:drawable/ic_menu_my_calendar"
+                app:tint="@color/black"
+                tools:src="@android:drawable/ic_menu_my_calendar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingCurrentLocationLbl"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:text="@string/addParkLocation"
+                android:textAlignment="viewEnd"
+                android:textColor="#181819"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addParkingCurrentLocationField"
+                android:layout_width="0dp"
+                android:layout_weight="60"
+                android:layout_marginStart="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_edit"
+                android:paddingStart="5sp"
+                android:ems="10"
+                android:hint="@string/addParkLocationHint"
+                android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/addParkingFetchCurrentLocBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:background="@android:drawable/ic_menu_mylocation"
+                app:tint="@color/black"
+                tools:src="@android:drawable/ic_menu_mylocation" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingORLbl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/addParkOR"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addParkingAddressLbl"
+                android:layout_width="0dp"
+                android:layout_weight="30"
+                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:text="@string/addParkAddressLbl"
+                android:textAlignment="viewEnd"
+                android:textColor="#181819"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addParkingAddressField"
+                android:layout_width="0dp"
+                android:layout_weight="60"
+                android:layout_marginStart="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_edit"
+                android:paddingStart="5sp"
+                android:ems="10"
+                android:hint="@string/addParkAddressHint"
+                android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/addParkingFetchAddressBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:background="@android:drawable/ic_menu_send"
+                android:clickable="true"
+                app:tint="@color/black"
+                tools:src="@android:drawable/ic_menu_send" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>
